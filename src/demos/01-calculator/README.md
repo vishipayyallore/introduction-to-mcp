@@ -37,7 +37,7 @@ uv sync
 
 ## Run
 
-Three ways to run the demo — pick the one that fits your workflow:
+Four ways to run the demo — pick the one that fits your workflow:
 
 ### Mode 1 — stdio, one terminal (client starts the server)
 
@@ -65,7 +65,7 @@ uv run python src/demos/01-calculator/client.py
 If the client cannot reach the server, it prints hints to start it or switch
 to `--stdio`.
 
-### Mode 3 — MCP Inspector (interactive browser UI)
+### Mode 3 — MCP Inspector via stdio (interactive browser UI)
 
 ```bash
 uv run mcp dev src/demos/01-calculator/server.py
@@ -76,17 +76,32 @@ them interactively from the browser.
 
 ![MCP Inspector — Tools tab](../../../docs/images/01-calculator-inspector-tools.png)
 
-**Transport Type: STDIO is the only supported mode for this demo.**
+**Use Transport Type: STDIO in the Inspector UI.** The other options
+("Streamable HTTP", "SSE") require a separately running HTTP server and will
+fail with the Inspector's default URL.
 
-When `mcp dev server.py` runs, the Inspector connects to the server via stdio
-internally. The other Transport Type options in the Inspector UI ("Streamable
-HTTP", "SSE") expect a separately running HTTP server and will show a
-connection error with this demo's default settings.
+### Mode 4 — MCP Inspector via Streamable HTTP
 
-> To use Streamable HTTP in the Inspector, you would need to start the server
-> separately (`uv run python src/demos/01-calculator/server.py`) and change
-> the Inspector URL to `http://127.0.0.1:8000/mcp`. That workflow is covered
-> in a later demo.
+**Terminal 1 — start the HTTP server:**
+
+```bash
+uv run python src/demos/01-calculator/server.py
+```
+
+**Terminal 2 — open the Inspector:**
+
+```bash
+uv run mcp dev src/demos/01-calculator/server.py
+```
+
+In the Inspector UI at `http://localhost:6274`:
+
+1. Set **Transport Type** → `Streamable HTTP`
+2. Set **URL** → `http://127.0.0.1:8000/mcp`
+3. Click **Connect**
+
+The Inspector will connect to the already-running HTTP server instead of
+spawning a new stdio subprocess.
 
 Host, port, and transport are read from `config/settings.json`.
 
