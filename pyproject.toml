@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 keywords = ["mcp", "model-context-protocol", "uv"]
 dependencies = [
-    "mcp[cli]>=1.0",
+    "mcp[cli]==1.27.1",
 ]
 
 [project.urls]
