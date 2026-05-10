@@ -82,26 +82,17 @@ fail with the Inspector's default URL.
 
 ### Mode 4 — MCP Inspector via Streamable HTTP
 
-**Terminal 1 — start the HTTP server:**
-
-```bash
-uv run python src/demos/01-calculator/server.py
-```
-
-**Terminal 2 — open the Inspector:**
-
-```bash
-uv run mcp dev src/demos/01-calculator/server.py
-```
-
-In the Inspector UI at `http://localhost:6274`:
-
-1. Set **Transport Type** → `Streamable HTTP`
-2. Set **URL** → `http://127.0.0.1:8000/mcp`
-3. Click **Connect**
-
-The Inspector will connect to the already-running HTTP server instead of
-spawning a new stdio subprocess.
+> **Not supported in this demo.** Two browser-level constraints prevent it:
+>
+> - **CORS** — with Connection Type "Direct", the browser connects straight to
+>   `http://127.0.0.1:8000/mcp`. The server does not send CORS headers, so the
+>   browser blocks the request ("Failed to fetch").
+> - **Proxy token** — with Connection Type "Proxy", the Inspector's proxy
+>   (port 6277) requires the session token printed at startup to forward
+>   requests. Configuring this is out of scope here.
+>
+> To inspect the HTTP server interactively, use Mode 2 (`client.py`) or a
+> future demo that adds CORS support.
 
 Host, port, and transport are read from `config/settings.json`.
 
