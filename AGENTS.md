@@ -17,9 +17,17 @@ Repository agent guidance for automation and code assistants.
 
 ## Source Intake Policy
 
-- `source-material/` is an internal, read-only intake folder for instructor notes.
+- `source-material/` is an internal, read-only intake folder for instructor notes. It is listed in
+  `.gitignore`, so it may exist only on a maintainer’s machine; it is not assumed present in every
+  clone.
 - Publish-facing docs must be transformative and original.
 - Avoid copying wording, sequence, or examples directly from intake notes.
+
+### Agent model (no dedicated “source-material agent”)
+
+There is **no** separate executable agent or skill whose only job is `source-material/`. Intake
+rules apply to **every** assistant and automation run in this repo (root `AGENTS.md`, `.claude/`,
+`.cursor/rules/`, `.github/copilot-instructions.md`).
 
 ## `src/Working/` modification policy (Swamy-owned sandbox)
 

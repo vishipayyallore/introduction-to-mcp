@@ -56,3 +56,13 @@ MCP typically involves:
 - Resources and prompts
 - Building custom MCP servers
 - Security and transport layers
+
+## Repository layout (contributors)
+
+**`source-material/`** — Optional local folder for raw instructor or author notes. It is listed in
+`.gitignore`, so it may be absent in a fresh clone. Anything that becomes learner-facing must be
+written in normal project paths (for example `docs/`, `src/`) with original wording and structure,
+not copied from intake files. For the full policy for humans and AI tools, see **`AGENTS.md`**.
+
+Assistant-specific rules also live under **`.github/`**, **`.cursor/rules/`**, and **`.claude/`**
+(next to root **`CLAUDE.md`** and **`skills.md`**).

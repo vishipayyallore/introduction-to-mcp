@@ -3,6 +3,10 @@
 **Project:** Python Fundamentals Curriculum (Swamy's Tech Skills Academy)
 **Purpose:** Educational content development, session documentation, and practice code.
 
+Read this file together with root **`AGENTS.md`** (automation checks, intake policy, session
+bucketing, and precedence in its **Notes** section). For Claude-specific supplements, see
+**`.claude/AGENTS.md`** and **`.claude/rules/`**.
+
 ---
 
 ## 🚨 Critical Rules
@@ -44,9 +48,11 @@ python-fundamentals/
 │       ├── Module1/   # Foundational drafts → L1/S1 or S2
 │       ├── S5/ … S10/  # Staging → matching L1 folders
 ├── .cursor/rules/          # Cursor AI rule files
+├── .claude/                # Claude Code supplements (AGENTS, skills, rules/)
 ├── .github/
 │   ├── copilot-instructions.md
 │   └── workflows/
+├── skills.md               # Repo skill index (see .claude/skills.md for Claude notes)
 └── CLAUDE.md               # This file
 ```
 

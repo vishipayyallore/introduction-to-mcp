@@ -13,8 +13,17 @@ Repository-level skill index for contributors and AI assistants.
 
 ## Guardrails
 
-- Treat `source-material/` as an internal, read-only intake folder.
+- Treat `source-material/` as an internal, read-only intake folder (often gitignored locally; not
+  guaranteed in every clone).
 - Do not copy source text verbatim into publish-facing documentation.
 - Keep references on formal curriculum paths, not sandbox paths.
 - Default new additions to planned/new sessions; do not inject into completed sessions without explicit user permission.
 - **`src/Working/` is hands-off:** do not modify anything under `src/Working/` unless Swamy explicitly requests that path or folder in the current task; prefer formal `src/L{level}/S{session}/` and `docs/sessions/` for changes.
+
+## Policy vs runnable skills
+
+Intake and zero-copy expectations are expressed in **repository instructions** (root `AGENTS.md`,
+`CLAUDE.md`, `.github/copilot-instructions.md`, `.cursor/rules/`, `.claude/AGENTS.md`,
+`.claude/rules/`) — not as a separate installable skill file dedicated only to `source-material/`.
+Treat this `skills.md` file as the **canonical skill index**; `.claude/skills.md` extends it for
+Claude Code usage notes.
