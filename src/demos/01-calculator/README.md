@@ -11,15 +11,15 @@ MCP servers with decorators.
 | Tool registration with type inference | `@mcp.tool()` decorators |
 | Resource exposure | `@mcp.resource()` decorator |
 | Prompt templates | `@mcp.prompt()` decorator |
-| Streamable-HTTP transport | `mcp.run(transport="streamable-http")` |
-| Client connection and tool calls | `client.py` |
+| Transports (HTTP + stdio) | `config/settings.json` + `server.py --transport` |
+| Client connection and tool calls | `client.py` (HTTP or `--stdio`) |
 
 ## Structure
 
 ```text
 01-calculator/
 ├── server.py          # FastMCP server: 4 tools, 1 resource, 1 prompt
-├── client.py          # HTTP client: lists capabilities, calls all tools
+├── client.py          # Client: HTTP (default) or stdio (--stdio)
 └── config/
     └── settings.json  # host, port, transport, server name
 ```
@@ -60,11 +60,20 @@ uv run python src/demos/01-calculator/client.py
 If you run the HTTP client without the server, you will see a connection error
 with hints to start the server or use `--stdio`.
 
-**Or inspect interactively with the MCP CLI:**
+**Or inspect interactively with the MCP Inspector:**
+
+Start the server (Terminal 1), then open the Inspector in the browser:
 
 ```bash
-uv run mcp dev src/demos/01-calculator/server.py
+uv run python src/demos/01-calculator/server.py   # Terminal 1
+uv run mcp dev                                     # Terminal 2 — opens http://localhost:6274
 ```
+
+In the Inspector UI, switch the transport to **Streamable HTTP** and set the URL to
+`http://127.0.0.1:8000/mcp`, then click **Connect**.
+
+> `mcp dev <script>` is designed for stdio servers. Because this server uses
+> streamable-http, connect the Inspector manually via the URL field instead.
 
 Host, port, and transport are read from `config/settings.json`.
 

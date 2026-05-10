@@ -1,10 +1,10 @@
 """Calculator MCP server — FastMCP edition.
 
-Run from the repo root:
+HTTP mode (default — serves on http://127.0.0.1:8000/mcp):
     uv run python src/demos/01-calculator/server.py
 
-Inspect interactively with the MCP CLI:
-    uv run mcp dev src/demos/01-calculator/server.py
+Stdio mode (for subprocess clients or the MCP Inspector):
+    uv run python src/demos/01-calculator/server.py --transport stdio
 """
 
 import json
