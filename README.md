@@ -4,13 +4,19 @@ A beginner-friendly introduction to MCP (Model Context Protocol).
 
 ## What is MCP?
 
-MCP stands for Model Context Protocol. It is an open protocol that enables AI models to securely interact with external tools, data sources, APIs, and applications through a standardized interface.
+MCP stands for Model Context Protocol. It is an open protocol that enables AI
+models to securely interact with external tools, data sources, APIs, and
+applications through a standardized interface.
 
-MCP acts as a universal integration layer between AI systems and external services, making tool integration and context sharing consistent and interoperable across platforms.
+MCP acts as a universal integration layer between AI systems and external
+services, making tool integration and context sharing consistent and
+interoperable across platforms.
 
 ## Why use MCP?
 
-MCP simplifies how AI applications connect with external systems. Instead of building custom integrations for every tool or API, developers can use a standardized protocol for communication.
+MCP simplifies how AI applications connect with external systems. Instead of
+building custom integrations for every tool or API, developers can use a
+standardized protocol for communication.
 
 Benefits of MCP include:
 
@@ -37,7 +43,8 @@ MCP typically involves:
 2. The MCP server exposes available tools and resources.
 3. The AI model discovers and invokes tools through the MCP interface.
 4. Results are returned in a standardized format.
-5. The AI application uses the returned context to generate responses or perform actions.
+5. The AI application uses the returned context to generate responses or perform
+   actions.
 
 ## Use Cases
 
@@ -59,10 +66,11 @@ MCP typically involves:
 
 ## Repository layout (contributors)
 
-**`source-material/`** — Optional local folder for raw instructor or author notes. It is listed in
-`.gitignore`, so it may be absent in a fresh clone. Anything that becomes learner-facing must be
-written in normal project paths (for example `docs/`, `src/`) with original wording and structure,
-not copied from intake files. For the full policy for humans and AI tools, see **`AGENTS.md`**.
+**`source-material/`** — Optional local folder for raw instructor or author notes.
+It is listed in `.gitignore`, so it may be absent in a fresh clone. Anything that
+becomes learner-facing must be written in normal project paths (for example
+`docs/`, `src/`) with original wording and structure, not copied from intake
+files. For the full policy for humans and AI tools, see **`AGENTS.md`**.
 
-Assistant-specific rules also live under **`.github/`**, **`.cursor/rules/`**, and **`.claude/`**
-(next to root **`CLAUDE.md`** and **`skills.md`**).
+Assistant-specific rules also live under **`.github/`**, **`.cursor/rules/`**,
+and **`.claude/`** (next to root **`CLAUDE.md`** and **`skills.md`**).

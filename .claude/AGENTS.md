@@ -20,6 +20,7 @@ Agent output must be **transformative**: rewrite every concept in fresh language
 and original pedagogical structure.
 
 Rules:
+
 - Do not copy wording, sequence, or narration from intake notes into any publish-facing doc.
 - Do not reference `source-material/` paths in session docs, READMEs, or curriculum files.
 - Extract only the core concept or student misconception, then explain it entirely from scratch.

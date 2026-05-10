@@ -133,6 +133,7 @@ raise SystemExit(main(sys.argv))
 ## 🔗 Related Files
 
 - **Cursor rules:** `.cursor/rules/` — full rule set for content creation, structure, QA
+- **Claude supplements:** `.claude/AGENTS.md`, `.claude/skills.md`, `.claude/rules/`
 - **Copilot instructions:** `.github/copilot-instructions.md`
 - **Structure doc:** `docs/RepositoryStructure.md`
 - **Master plan:** `docs/01_Python-Fundamentals-MasterPlan.md`

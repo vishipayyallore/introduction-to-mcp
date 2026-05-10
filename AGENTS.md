@@ -45,5 +45,6 @@ rules apply to **every** assistant and automation run in this repo (root `AGENTS
 
 ## Notes
 
-- This file is repository-local and complements `.github/copilot-instructions.md` and `CLAUDE.md`.
+- This file is repository-local and complements `.github/copilot-instructions.md`, `CLAUDE.md`,
+  and `.claude/` (for example `.claude/AGENTS.md`, `.claude/skills.md`, `.claude/rules/`).
 - If guidance conflicts, follow this precedence: `docs/RepositoryStructure.md` (structure source of truth) → `.github/copilot-instructions.md` → `CLAUDE.md` → this file.

@@ -1,7 +1,9 @@
 # skills.md — Claude Code Skill Index
 
 Repository-level skill index for Claude Code agents working in this repo.
-Extends the root `skills.md` with Claude-specific application notes.
+Extends the root `skills.md` with Claude-specific application notes. See
+[`.claude/rules/README.md`](rules/README.md) for rule supplements (including
+`source-material/` intake).
 
 ---
 
