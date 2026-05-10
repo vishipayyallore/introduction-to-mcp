@@ -78,4 +78,4 @@ Before marking any task complete:
 - `ruff check src`
 - `python -m compileall -q src`
 - `npx --yes markdownlint-cli2 "README.md" "docs/**/*.md" ".github/**/*.md"`
-- `./scripts/docs-links.ps1` (Docker required)
+- `./tools/psscripts/docs-links.ps1` (Docker required)

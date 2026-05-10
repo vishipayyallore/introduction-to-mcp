@@ -13,7 +13,7 @@ Repository agent guidance for automation and code assistants.
 1. `ruff check src`
 2. `python -m compileall -q src`
 3. `npx --yes markdownlint-cli2 "README.md" "docs/**/*.md" ".github/**/*.md"`
-4. `./scripts/docs-links.ps1` (Docker required)
+4. `./tools/psscripts/docs-links.ps1` (Docker required)
 
 ## Source Intake Policy
 
