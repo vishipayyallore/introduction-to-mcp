@@ -1,12 +1,12 @@
 # Calculator Demo
 
-A minimal MCP server and client using **FastMCP** — the high-level Python API for building
-MCP servers with decorators.
+A minimal MCP server and client using **FastMCP** — the high-level Python API
+for building MCP servers with decorators.
 
 ## What this teaches
 
 | Concept | Where |
-|---|---|
+| --- | --- |
 | Server lifecycle (init → negotiate → serve) | `server.py` startup |
 | Tool registration with type inference | `@mcp.tool()` decorators |
 | Resource exposure | `@mcp.resource()` decorator |
@@ -26,8 +26,9 @@ MCP servers with decorators.
 
 ## Setup
 
-Dependencies are managed at the repo root via `pyproject.toml` (`mcp[cli]==1.27.1`).
-No separate install step is needed — `uv` resolves everything automatically.
+Dependencies are managed at the repo root via `pyproject.toml`
+(`mcp[cli]==1.27.1`). No separate install step is needed — `uv` resolves
+everything automatically.
 
 ```bash
 # From the repo root — install dependencies if not already done:
@@ -36,16 +37,20 @@ uv sync
 
 ## Run
 
-**Easiest — one terminal (stdio; client starts the server):**
+Three ways to run the demo — pick the one that fits your workflow:
+
+### Mode 1 — stdio, one terminal (client starts the server)
 
 ```bash
 uv run python src/demos/01-calculator/client.py --stdio
 ```
 
-**HTTP — two terminals** (default client expects the server to already be
-listening on `http://127.0.0.1:8000/mcp` from `config/settings.json`):
+The client spawns the server as a subprocess over stdio. No separate server
+terminal needed.
 
-**Terminal 1 — start the server:**
+### Mode 2 — HTTP, two terminals
+
+**Terminal 1 — start the server** (serves on `http://127.0.0.1:8000/mcp`):
 
 ```bash
 uv run python src/demos/01-calculator/server.py
@@ -57,40 +62,34 @@ uv run python src/demos/01-calculator/server.py
 uv run python src/demos/01-calculator/client.py
 ```
 
-If you run the HTTP client without the server, you will see a connection error
-with hints to start the server or use `--stdio`.
+If the client cannot reach the server, it prints hints to start it or switch
+to `--stdio`.
 
-**Or inspect interactively with the MCP Inspector:**
-
-Start the server (Terminal 1), then open the Inspector in the browser:
+### Mode 3 — MCP Inspector (interactive browser UI)
 
 ```bash
-uv run python src/demos/01-calculator/server.py   # Terminal 1
-uv run mcp dev                                     # Terminal 2 — opens http://localhost:6274
+uv run mcp dev src/demos/01-calculator/server.py
 ```
 
-In the Inspector UI, switch the transport to **Streamable HTTP** and set the URL to
-`http://127.0.0.1:8000/mcp`, then click **Connect**.
-
-> `mcp dev <script>` is designed for stdio servers. Because this server uses
-> streamable-http, connect the Inspector manually via the URL field instead.
+Opens `http://localhost:6274` — browse tools, resources, and prompts and call
+them interactively from the browser.
 
 Host, port, and transport are read from `config/settings.json`.
 
 ## FastMCP vs low-level Server API
 
-| | FastMCP | `mcp.server.Server` |
-|---|---|---|
-| Tool definition | `@mcp.tool()` — type hints inferred as schema | Manual JSON Schema |
-| Resource definition | `@mcp.resource("uri://pattern")` | Manual handler registration |
-| Prompt definition | `@mcp.prompt()` | Manual handler registration |
+| Area | FastMCP | `mcp.server.Server` |
+| --- | --- | --- |
+| Tool definition | `@mcp.tool()` with inferred schema | Manual JSON Schema |
+| Resource definition | `@mcp.resource` patterns on URIs | Manual registration |
+| Prompt definition | `@mcp.prompt()` | Manual registration |
 | Transport | `mcp.run(transport=...)` | `stdio_server(app)` / custom |
 | Best for | Learning, rapid prototyping | Fine-grained control |
 
 ## Tools exposed
 
 | Tool | Inputs | Description |
-|---|---|---|
+| --- | --- | --- |
 | `add` | `a`, `b` (float) | Returns a + b |
 | `subtract` | `a`, `b` (float) | Returns a − b |
 | `multiply` | `a`, `b` (float) | Returns a × b |
@@ -99,5 +98,5 @@ Host, port, and transport are read from `config/settings.json`.
 ## Resource and Prompt
 
 - **`calculation://help`** — plain-text reference guide for the tools
-- **`evaluate(expression)`** — generates a prompt asking the model to solve an expression
-  using only the calculator tools
+- **`evaluate(expression)`** — generates a prompt asking the model to solve an
+  expression using only the calculator tools
