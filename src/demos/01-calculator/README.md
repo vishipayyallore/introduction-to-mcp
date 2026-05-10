@@ -39,6 +39,14 @@ uv sync
 
 Four ways to run the demo — pick the one that fits your workflow:
 
+> [!IMPORTANT]
+> For **Streamable HTTP**, start the HTTP server **before** connecting from the
+> MCP Inspector or HTTP client.
+>
+> If the server is not already running, you will get:
+>
+> `ECONNREFUSED 127.0.0.1:8000`
+
 ### Mode 1 — stdio, one terminal (client starts the server)
 
 ```bash
@@ -107,6 +115,13 @@ In the Inspector UI at `http://localhost:6274`:
 The Inspector proxy makes the request server-side, so the browser CORS
 restriction does not apply. The server must be running before you click
 Connect — `ECONNREFUSED` means the server in Terminal 1 is not up yet.
+
+### Quick failure signal guide
+
+- `Created server transport` / `Created StreamableHttp client transport` means
+  the Inspector and proxy started correctly.
+- `connect ECONNREFUSED 127.0.0.1:8000` means the FastMCP HTTP server is not
+  reachable yet (usually not started, or not listening on that host/port).
 
 ![MCP Inspector — Streamable HTTP, tool result](../../../docs/images/01-calculator-inspector-http-success.png)
 
