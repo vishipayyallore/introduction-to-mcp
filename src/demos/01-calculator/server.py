@@ -1,100 +1,69 @@
-"""MCP calculator server — exposes add, subtract, multiply, divide as tools."""
+"""Calculator MCP server — FastMCP edition.
 
-import asyncio
-import json
-import logging
-import sys
-from pathlib import Path
+Run with streamable-http (default, serves on http://localhost:8000/mcp):
+    python server.py
 
-from mcp.server import Server
-from mcp.server.stdio import stdio_server
-from mcp import types
+Inspect interactively with the MCP CLI:
+    mcp dev server.py
+"""
 
-# Load config from sibling config/settings.json
-_config_path = Path(__file__).parent / "config" / "settings.json"
-_config = json.loads(_config_path.read_text())
+from mcp.server.fastmcp import FastMCP
 
-logging.basicConfig(level=_config["log_level"], stream=sys.stderr)
-log = logging.getLogger(__name__)
-
-app = Server(_config["server"]["name"])
+mcp = FastMCP("calculator", json_response=True)
 
 
-@app.list_tools()
-async def list_tools() -> list[types.Tool]:
-    return [
-        types.Tool(
-            name="add",
-            description="Add two numbers and return the result.",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "a": {"type": "number", "description": "First operand"},
-                    "b": {"type": "number", "description": "Second operand"},
-                },
-                "required": ["a", "b"],
-            },
-        ),
-        types.Tool(
-            name="subtract",
-            description="Subtract b from a and return the result.",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "a": {"type": "number", "description": "Minuend"},
-                    "b": {"type": "number", "description": "Subtrahend"},
-                },
-                "required": ["a", "b"],
-            },
-        ),
-        types.Tool(
-            name="multiply",
-            description="Multiply two numbers and return the result.",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "a": {"type": "number", "description": "First factor"},
-                    "b": {"type": "number", "description": "Second factor"},
-                },
-                "required": ["a", "b"],
-            },
-        ),
-        types.Tool(
-            name="divide",
-            description="Divide a by b and return the result. Errors if b is zero.",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "a": {"type": "number", "description": "Dividend"},
-                    "b": {"type": "number", "description": "Divisor (must not be zero)"},
-                },
-                "required": ["a", "b"],
-            },
-        ),
-    ]
+# --- Tools -------------------------------------------------------------------
+
+@mcp.tool()
+def add(a: float, b: float) -> float:
+    """Add two numbers and return the result."""
+    return a + b
 
 
-@app.call_tool()
-async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
-    a = arguments["a"]
-    b = arguments["b"]
+@mcp.tool()
+def subtract(a: float, b: float) -> float:
+    """Subtract b from a and return the result."""
+    return a - b
 
-    if name == "add":
-        result = a + b
-    elif name == "subtract":
-        result = a - b
-    elif name == "multiply":
-        result = a * b
-    elif name == "divide":
-        if b == 0:
-            raise ValueError("Division by zero is not allowed.")
-        result = a / b
-    else:
-        raise ValueError(f"Unknown tool: {name!r}")
 
-    log.info("%s(%s, %s) = %s", name, a, b, result)
-    return [types.TextContent(type="text", text=str(result))]
+@mcp.tool()
+def multiply(a: float, b: float) -> float:
+    """Multiply two numbers and return the result."""
+    return a * b
 
+
+@mcp.tool()
+def divide(a: float, b: float) -> float:
+    """Divide a by b. Raises an error if b is zero."""
+    if b == 0:
+        raise ValueError("Division by zero is not allowed.")
+    return a / b
+
+
+# --- Resources ---------------------------------------------------------------
+
+@mcp.resource("calculation://help")
+def calculation_help() -> str:
+    """Reference guide for the available calculator tools."""
+    return (
+        "Available operations: add, subtract, multiply, divide.\n"
+        "All tools accept two float arguments (a, b) and return a float.\n"
+        "divide(a, 0) raises an error."
+    )
+
+
+# --- Prompts -----------------------------------------------------------------
+
+@mcp.prompt()
+def evaluate(expression: str) -> str:
+    """Prompt the model to evaluate a mathematical expression using the calculator tools."""
+    return (
+        f"Evaluate the following expression using only the available calculator tools "
+        f"(add, subtract, multiply, divide): {expression}"
+    )
+
+
+# --- Entry point -------------------------------------------------------------
 
 if __name__ == "__main__":
-    asyncio.run(stdio_server(app))
+    mcp.run(transport="streamable-http")

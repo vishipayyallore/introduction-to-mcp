@@ -1,24 +1,28 @@
 # Calculator Demo
 
-A minimal MCP server and client demonstrating core protocol concepts using a four-function calculator.
+A minimal MCP server and client using **FastMCP** — the high-level Python API for building
+MCP servers with decorators.
 
 ## What this teaches
 
-- MCP server lifecycle (init → capability negotiation → tool calls → shutdown)
-- Tool registration with typed input schemas
-- Request / response handling
-- Client-server interaction over stdio transport
-- Structured tool schemas and error handling
+| Concept | Where |
+|---|---|
+| Server lifecycle (init → negotiate → serve) | `server.py` startup |
+| Tool registration with type inference | `@mcp.tool()` decorators |
+| Resource exposure | `@mcp.resource()` decorator |
+| Prompt templates | `@mcp.prompt()` decorator |
+| Streamable-HTTP transport | `mcp.run(transport="streamable-http")` |
+| Client connection and tool calls | `client.py` |
 
 ## Structure
 
 ```text
 01-calculator/
-├── server.py          # MCP server exposing add, subtract, multiply, divide
-├── client.py          # MCP client that calls the server tools
+├── server.py          # FastMCP server: 4 tools, 1 resource, 1 prompt
+├── client.py          # HTTP client: lists capabilities, calls all tools
 ├── requirements.txt   # Python dependencies
 └── config/
-    └── settings.json  # Server name, version, transport config
+    └── settings.json  # Server metadata (name, version, transport)
 ```
 
 ## Setup
@@ -32,23 +36,45 @@ pip install -r requirements.txt
 
 ## Run
 
-Start the server and client together (client launches server as a subprocess):
+**Terminal 1 — start the server (serves on http://localhost:8000/mcp):**
+
+```bash
+python server.py
+```
+
+**Terminal 2 — run the client:**
 
 ```bash
 python client.py
 ```
 
-Or inspect the server interactively with the MCP CLI:
+**Or inspect interactively with the MCP CLI:**
 
 ```bash
 mcp dev server.py
 ```
 
+## FastMCP vs low-level Server API
+
+| | FastMCP | `mcp.server.Server` |
+|---|---|---|
+| Tool definition | `@mcp.tool()` — type hints inferred as schema | Manual JSON Schema |
+| Resource definition | `@mcp.resource("uri://pattern")` | Manual handler registration |
+| Prompt definition | `@mcp.prompt()` | Manual handler registration |
+| Transport | `mcp.run(transport=...)` | `stdio_server(app)` / custom |
+| Best for | Learning, rapid prototyping | Fine-grained control |
+
 ## Tools exposed
 
 | Tool | Inputs | Description |
 |---|---|---|
-| `add` | `a`, `b` (number) | Returns a + b |
-| `subtract` | `a`, `b` (number) | Returns a − b |
-| `multiply` | `a`, `b` (number) | Returns a × b |
-| `divide` | `a`, `b` (number) | Returns a ÷ b; errors on b = 0 |
+| `add` | `a`, `b` (float) | Returns a + b |
+| `subtract` | `a`, `b` (float) | Returns a − b |
+| `multiply` | `a`, `b` (float) | Returns a × b |
+| `divide` | `a`, `b` (float) | Returns a ÷ b; errors if b = 0 |
+
+## Resource and Prompt
+
+- **`calculation://help`** — plain-text reference guide for the tools
+- **`evaluate(expression)`** — generates a prompt asking the model to solve an expression
+  using only the calculator tools
