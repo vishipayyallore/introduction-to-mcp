@@ -108,6 +108,8 @@ The Inspector proxy makes the request server-side, so the browser CORS
 restriction does not apply. The server must be running before you click
 Connect — `ECONNREFUSED` means the server in Terminal 1 is not up yet.
 
+![MCP Inspector — Streamable HTTP, tool result](../../../docs/images/01-calculator-inspector-http-success.png)
+
 Host, port, and transport are read from `config/settings.json`.
 
 ## FastMCP vs low-level Server API
