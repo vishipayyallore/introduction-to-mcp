@@ -47,15 +47,11 @@ direct use in publish-facing docs.
 
 **When working with source-material, you must:**
 
-- Borrow only the core concept or student misconception being addressed.
-- Rewrite every explanation in fresh language with original structure, examples,
-  and narration.
-- Never preserve the original wording, section order, or narration flow.
-- Never reference or link to `source-material/` paths in session docs or any
-  user-visible content.
+- Rewrite in fresh structure and voice; never reuse wording, section order, or narration.
+- Never reference or link `source-material/` paths in session docs or user-visible content.
 
-**Session Bucketing from source-material:** New content derived from
-source-material must be routed to planned or new sessions first. Do not add to
+**Session Bucketing from source-material:**
+New content derived from source-material must be routed to planned or new sessions first. Do not add to
 completed sessions without Swamy's explicit go-ahead in the current task
 message.
 

@@ -39,13 +39,6 @@ confirmation before writing any content.
 
 ---
 
-## `src/Working/` Policy
-
-Do not touch files under `src/Working/` unless Swamy explicitly requests it by naming that path
-in the current task. Inferences like "this session relates to Working files" do not qualify.
-
----
-
 ## Precedence Order
 
 When instructions conflict, **first** follow the **Notes → precedence** chain in root **`AGENTS.md`**

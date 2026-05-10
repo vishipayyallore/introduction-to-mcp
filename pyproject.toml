@@ -1,7 +1,15 @@
 [project]
 name = "introduction-to-mcp"
 version = "0.1.0"
-description = "Add your description here"
+description = "Install the uv Python package manager and use it to set up or run Model Context Protocol (MCP) servers."
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+keywords = ["mcp", "model-context-protocol", "uv"]
+dependencies = [
+    "mcp[cli]>=1.0",
+]
+
+[project.urls]
+Homepage = "https://modelcontextprotocol.io"
+Documentation = "https://modelcontextprotocol.github.io/python-sdk/"
+Uv = "https://docs.astral.sh/uv/"

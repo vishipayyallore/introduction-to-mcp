@@ -7,6 +7,7 @@ Claude-oriented tooling. They do **not** replace root **`AGENTS.md`**, root **`C
 | File | Purpose |
 | --- | --- |
 | [`source-material-intake.md`](source-material-intake.md) | How to use `source-material/` safely (transformative rewrite only). |
+| [`../CLAUDE.md`](../CLAUDE.md) | Short placement-guardrails supplement; defers to root `CLAUDE.md` and `AGENTS.md`. |
 
 There is **no** separate runnable “source-material skill” or dedicated agent binary in this folder.
 Intake policy is **repository-wide** for every assistant; see root **`AGENTS.md`** (Source Intake

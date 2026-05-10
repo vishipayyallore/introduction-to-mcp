@@ -15,21 +15,16 @@ All curriculum output — session docs, practice files, explanations — must be
 - Technically accurate; all `.py` files must run without errors.
 - Structurally consistent with the existing session template (objectives, concepts, practice refs, takeaways).
 
-## Session Document Structure
-
-Every session doc must include: learning objectives, concept explanations, practice file references,
-and key takeaways. Keep references on formal paths (`src/L{level}/S{session}/`), never sandbox paths.
-
 ---
 
 ## Internal Source Intake Rules
 
 These rules govern how content from `source-material/` enters the curriculum.
+`source-material/` is **internal, read-only** intake: instructor notes and raw session transcripts.
 
-### `source-material/` is internal, read-only intake
+### What this means in practice
 
-The `source-material/` folder contains raw instructor notes and session transcripts.
-Treat every file in it as:
+Treat every file in `source-material/` as:
 
 - **Internal only** — never cite, link to, or reference in publish-facing docs.
 - **Read-only inspiration** — extract only the core concept or identified student misconception.
@@ -47,6 +42,13 @@ Never copy any block of text verbatim from source-material, third-party books, o
 Paraphrase that preserves the original sentence structure also fails this requirement.
 
 Test: could a reader trace the output back to the source text? If yes, rewrite completely.
+
+---
+
+## Session Document Structure
+
+Every session doc must include: learning objectives, concept explanations, practice file references,
+and key takeaways. Keep references on formal paths (`src/L{level}/S{session}/`), never sandbox paths.
 
 ---
 
