@@ -75,38 +75,14 @@ files. For the full policy for humans and AI tools, see **`AGENTS.md`**.
 Assistant-specific rules also live under **`.github/`**, **`.cursor/rules/`**,
 and **`.claude/`** (next to root **`CLAUDE.md`** and **`skills.md`**).
 
-## Local development ([uv](https://docs.astral.sh/uv/))
+## Local development (uv)
 
-This repo uses **uv** for Python tooling. Install uv using the upstream
-instructions for your OS, then:
-
-### `uv init`
-
-Creates a new project layout (for example `pyproject.toml` and related
-defaults). Use this when you are **starting a brand-new Python project** from an
-empty directory. **This repository already ships a `pyproject.toml`**, so you
-normally **do not** run `uv init` here unless you are intentionally
-re-scaffolding.
-
-### `uv sync --all-groups --link-mode=copy`
-
-Installs dependencies from the lockfile into the project environment and
-includes **every optional dependency group** (for example dev or docs groups when
-they exist in `pyproject.toml`). **`--link-mode=copy`** copies files into the
-environment instead of hardlinking, which avoids issues on some **Windows** and
-**network / shared** filesystems.
-
-New project (empty directory):
-
-```bash
-uv init
-```
-
-This repository (install all groups, stable linking on Windows / shared disks):
+This repo uses **[uv](https://docs.astral.sh/uv/)** for Python tooling. After
+cloning, a typical first step is:
 
 ```bash
 uv sync --all-groups --link-mode=copy
 ```
 
-After `uv sync`, use **`uv run …`** to execute Python tools and scripts with
-that environment.
+Full command notes (`uv init`, `uv sync`, `uv run mcp`, and context) live in
+**[`docs/references/uv-commands.md`](docs/references/uv-commands.md)**.

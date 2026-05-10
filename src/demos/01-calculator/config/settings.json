@@ -1,0 +1,8 @@
+{
+  "server": {
+    "name": "calculator",
+    "version": "0.1.0"
+  },
+  "transport": "stdio",
+  "log_level": "INFO"
+}
