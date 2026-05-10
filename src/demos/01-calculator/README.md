@@ -76,6 +76,18 @@ them interactively from the browser.
 
 ![MCP Inspector — Tools tab](../../../docs/images/01-calculator-inspector-tools.png)
 
+**Transport Type: STDIO is the only supported mode for this demo.**
+
+When `mcp dev server.py` runs, the Inspector connects to the server via stdio
+internally. The other Transport Type options in the Inspector UI ("Streamable
+HTTP", "SSE") expect a separately running HTTP server and will show a
+connection error with this demo's default settings.
+
+> To use Streamable HTTP in the Inspector, you would need to start the server
+> separately (`uv run python src/demos/01-calculator/server.py`) and change
+> the Inspector URL to `http://127.0.0.1:8000/mcp`. That workflow is covered
+> in a later demo.
+
 Host, port, and transport are read from `config/settings.json`.
 
 ## FastMCP vs low-level Server API
