@@ -14,7 +14,13 @@ from mcp.server.fastmcp import FastMCP
 
 _CONFIG = json.loads((Path(__file__).parent / "config" / "settings.json").read_text())
 
-mcp = FastMCP(_CONFIG["server"]["name"], json_response=True)
+mcp = FastMCP(
+    _CONFIG["server"]["name"],
+    host=_CONFIG["host"],
+    port=_CONFIG["port"],
+    log_level=_CONFIG["log_level"],
+    json_response=True,
+)
 
 
 # --- Tools -------------------------------------------------------------------
@@ -71,8 +77,4 @@ def evaluate(expression: str) -> str:
 # --- Entry point -------------------------------------------------------------
 
 if __name__ == "__main__":
-    mcp.run(
-        transport=_CONFIG["transport"],
-        host=_CONFIG["host"],
-        port=_CONFIG["port"],
-    )
+    mcp.run(transport=_CONFIG["transport"])
