@@ -36,7 +36,16 @@ uv sync
 
 ## Run
 
-**Terminal 1 — start the server (serves on http://127.0.0.1:8000/mcp):**
+**Easiest — one terminal (stdio; client starts the server):**
+
+```bash
+uv run python src/demos/01-calculator/client.py --stdio
+```
+
+**HTTP — two terminals** (default client expects the server to already be
+listening on `http://127.0.0.1:8000/mcp` from `config/settings.json`):
+
+**Terminal 1 — start the server:**
 
 ```bash
 uv run python src/demos/01-calculator/server.py
@@ -47,6 +56,9 @@ uv run python src/demos/01-calculator/server.py
 ```bash
 uv run python src/demos/01-calculator/client.py
 ```
+
+If you run the HTTP client without the server, you will see a connection error
+with hints to start the server or use `--stdio`.
 
 **Or inspect interactively with the MCP CLI:**
 

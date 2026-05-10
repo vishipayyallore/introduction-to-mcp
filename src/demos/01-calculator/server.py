@@ -77,4 +77,16 @@ def evaluate(expression: str) -> str:
 # --- Entry point -------------------------------------------------------------
 
 if __name__ == "__main__":
-    mcp.run(transport=_CONFIG["transport"])
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Calculator MCP server (FastMCP).")
+    parser.add_argument(
+        "--transport",
+        default=None,
+        metavar="NAME",
+        help='Override config transport (e.g. "stdio" for subprocess clients, '
+        '"streamable-http" for HTTP). Default: value from config/settings.json.',
+    )
+    ns = parser.parse_args()
+    transport = ns.transport if ns.transport is not None else _CONFIG["transport"]
+    mcp.run(transport=transport)
