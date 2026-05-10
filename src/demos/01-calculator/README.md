@@ -74,6 +74,8 @@ uv run mcp dev src/demos/01-calculator/server.py
 Opens `http://localhost:6274` — browse tools, resources, and prompts and call
 them interactively from the browser.
 
+![MCP Inspector — Tools tab](../../../docs/images/01-calculator-inspector-tools.png)
+
 Host, port, and transport are read from `config/settings.json`.
 
 ## FastMCP vs low-level Server API
