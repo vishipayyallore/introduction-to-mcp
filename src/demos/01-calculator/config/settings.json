@@ -3,6 +3,8 @@
     "name": "calculator",
     "version": "0.1.0"
   },
-  "transport": "stdio",
+  "transport": "streamable-http",
+  "host": "127.0.0.1",
+  "port": 8000,
   "log_level": "INFO"
 }

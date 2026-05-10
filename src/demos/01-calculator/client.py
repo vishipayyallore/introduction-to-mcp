@@ -1,18 +1,21 @@
 """Calculator MCP client — connects to the FastMCP server via streamable-http.
 
-Start the server first:
-    python server.py
+Start the server first (Terminal 1):
+    uv run python src/demos/01-calculator/server.py
 
-Then run this client:
-    python client.py
+Then run this client (Terminal 2):
+    uv run python src/demos/01-calculator/client.py
 """
 
 import asyncio
+import json
+from pathlib import Path
 
 from mcp import ClientSession
 from mcp.client.streamable_http import streamablehttp_client
 
-SERVER_URL = "http://localhost:8000/mcp"
+_CONFIG = json.loads((Path(__file__).parent / "config" / "settings.json").read_text())
+SERVER_URL = f"http://{_CONFIG['host']}:{_CONFIG['port']}/mcp"
 
 
 async def run() -> None:

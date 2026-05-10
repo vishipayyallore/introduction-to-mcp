@@ -20,39 +20,41 @@ MCP servers with decorators.
 01-calculator/
 ├── server.py          # FastMCP server: 4 tools, 1 resource, 1 prompt
 ├── client.py          # HTTP client: lists capabilities, calls all tools
-├── requirements.txt   # Python dependencies
 └── config/
-    └── settings.json  # Server metadata (name, version, transport)
+    └── settings.json  # host, port, transport, server name
 ```
 
 ## Setup
 
+Dependencies are managed at the repo root via `pyproject.toml` (`mcp[cli]==1.27.1`).
+No separate install step is needed — `uv` resolves everything automatically.
+
 ```bash
-cd src/demos/01-calculator
-python -m venv .venv
-source .venv/bin/activate      # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+# From the repo root — install dependencies if not already done:
+uv sync
 ```
 
 ## Run
 
-**Terminal 1 — start the server (serves on http://localhost:8000/mcp):**
+**Terminal 1 — start the server (serves on http://127.0.0.1:8000/mcp):**
 
 ```bash
-python server.py
+uv run python src/demos/01-calculator/server.py
 ```
 
 **Terminal 2 — run the client:**
 
 ```bash
-python client.py
+uv run python src/demos/01-calculator/client.py
 ```
 
 **Or inspect interactively with the MCP CLI:**
 
 ```bash
-mcp dev server.py
+uv run mcp dev src/demos/01-calculator/server.py
 ```
+
+Host, port, and transport are read from `config/settings.json`.
 
 ## FastMCP vs low-level Server API
 

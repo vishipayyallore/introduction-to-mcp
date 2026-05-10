@@ -1,15 +1,20 @@
 """Calculator MCP server — FastMCP edition.
 
-Run with streamable-http (default, serves on http://localhost:8000/mcp):
-    python server.py
+Run from the repo root:
+    uv run python src/demos/01-calculator/server.py
 
 Inspect interactively with the MCP CLI:
-    mcp dev server.py
+    uv run mcp dev src/demos/01-calculator/server.py
 """
+
+import json
+from pathlib import Path
 
 from mcp.server.fastmcp import FastMCP
 
-mcp = FastMCP("calculator", json_response=True)
+_CONFIG = json.loads((Path(__file__).parent / "config" / "settings.json").read_text())
+
+mcp = FastMCP(_CONFIG["server"]["name"], json_response=True)
 
 
 # --- Tools -------------------------------------------------------------------
@@ -66,4 +71,8 @@ def evaluate(expression: str) -> str:
 # --- Entry point -------------------------------------------------------------
 
 if __name__ == "__main__":
-    mcp.run(transport="streamable-http")
+    mcp.run(
+        transport=_CONFIG["transport"],
+        host=_CONFIG["host"],
+        port=_CONFIG["port"],
+    )
