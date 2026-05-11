@@ -33,8 +33,8 @@ These demos are designed to teach:
 
 | Demo | Topic | What you learn |
 | --- | --- | --- |
-| 01 | Basic FastMCP calculator | Build a minimal FastMCP server with tools, resources, prompts, and dual transport support (stdio + Streamable HTTP). Learn MCP fundamentals and Inspector workflows. |
-| 02 | Typed contracts + validation | Use Pydantic request/response models for structured tool contracts, schema generation, validation, and typed MCP interactions. |
+| 01 | [Basic FastMCP calculator](01-calculator/) | Build a minimal FastMCP server with tools, resources, prompts, and dual transport support (stdio + Streamable HTTP). Learn MCP fundamentals and Inspector workflows. |
+| 02 | [Typed contracts + validation](02-typed-calculator/) | Use Pydantic request/response models for structured tool contracts, schema generation, validation, and typed MCP interactions. |
 | 03 | Async tools | Implement async MCP tools with `async/await`, background operations, concurrency, cancellation handling, and latency-aware workflows. |
 | 04 | Stateful resources | Build dynamic resources with URI parameters, session-aware state, calculation history, and contextual resource retrieval. |
 | 05 | Multi-tool orchestration | Coordinate multiple MCP tools in a single workflow, compose tool pipelines, and manage intermediate execution state. |
