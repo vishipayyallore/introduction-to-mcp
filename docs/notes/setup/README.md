@@ -117,7 +117,7 @@ scaffolding your server needs.
 | Register server with Claude Desktop | `uv run mcp install server.py --name "My Server"` |
 | Run server directly | `uv run server.py` |
 
-`mcp dev server.py` starts an interactive inspector session at `localhost:5173`
+`mcp dev server.py` starts an interactive inspector session at `localhost:6274`
 where you can call tools and inspect request/response pairs without a full
 Claude Desktop session. Use this during development before registering with
 Claude Desktop.

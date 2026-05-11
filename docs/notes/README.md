@@ -31,4 +31,4 @@ docs/
     └── 08-real-world-use-cases/
 ```
 
-Experiments and prototypes live in `src/`. Copied or reference articles go in `source-material/`.
+Experiments and prototypes live in `src/`.

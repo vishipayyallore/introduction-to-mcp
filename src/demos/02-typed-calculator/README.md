@@ -128,7 +128,7 @@ As suggested in curriculum review — **not** part of this folder:
 | Topic | Planned demo |
 | --- | --- |
 | Logging / tracing middleware | Later (e.g. production-focused demo) |
-| `async` tools + delays | Demo 03 |
+| `async` tools + delays | [Demo 03 — Leave Manager](../03-leave-manager/README.md) |
 | Stateful / templated resources | Demo 04 |
 | Shared config package beyond JSON loader | Optional refactor when multiple demos need it |
 
