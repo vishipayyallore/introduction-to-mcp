@@ -326,9 +326,24 @@ def submit_leave_request_impl(
     if not employee:
         return f"Error: Employee {employee_id} not found"
 
+    if days_requested <= 0:
+        return "Error: days_requested must be greater than 0"
+
     valid_types = ["annual", "sick", "personal", "emergency"]
-    if leave_type.lower() not in valid_types:
+    leave_type_normalized = leave_type.lower()
+    if leave_type_normalized not in valid_types:
         return f"Error: Invalid leave type. Must be one of: {', '.join(valid_types)}"
+
+    if leave_type_normalized == "annual" and days_requested > employee.annual_leave_balance:
+        return (
+            f"Error: Insufficient annual leave balance for {employee.name}. "
+            f"Requested {days_requested}, available {employee.annual_leave_balance}"
+        )
+    if leave_type_normalized == "sick" and days_requested > employee.sick_leave_balance:
+        return (
+            f"Error: Insufficient sick leave balance for {employee.name}. "
+            f"Requested {days_requested}, available {employee.sick_leave_balance}"
+        )
 
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -360,7 +375,7 @@ def submit_leave_request_impl(
             employee.name,
             start_date,
             end_date,
-            leave_type.lower(),
+            leave_type_normalized,
             "pending",
             reason,
             days_requested,

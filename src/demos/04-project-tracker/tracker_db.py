@@ -372,13 +372,15 @@ def format_tickets_by_assignee(assignee: str) -> str:
 
 def format_all_projects() -> str:
     projects = load_projects()
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT project, COUNT(*) FROM tickets GROUP BY project")
+    ticket_counts = {project_name: count for project_name, count in cursor.fetchall()}
+    conn.close()
+
     result = f"All Projects ({len(projects)}):\n\n"
     for project in projects:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT COUNT(*) FROM tickets WHERE project = ?", (project.name,))
-        ticket_count = cursor.fetchone()[0]
-        conn.close()
+        ticket_count = ticket_counts.get(project.name, 0)
 
         result += f"{project.project_id}: {project.name}\n"
         result += f"  Description: {project.description}\n"
