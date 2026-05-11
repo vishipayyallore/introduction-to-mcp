@@ -7,12 +7,11 @@ Stdio mode (for subprocess clients or the MCP Inspector):
     uv run python src/demos/01-calculator/server.py --transport stdio
 """
 
-import json
-from pathlib import Path
-
 from mcp.server.fastmcp import FastMCP
 
-_CONFIG = json.loads((Path(__file__).parent / "config" / "settings.json").read_text())
+from settings import load_config
+
+_CONFIG = load_config()
 
 mcp = FastMCP(
     _CONFIG["server"]["name"],

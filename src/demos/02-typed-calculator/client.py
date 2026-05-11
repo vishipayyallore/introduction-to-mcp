@@ -1,13 +1,13 @@
-"""Calculator MCP client — HTTP (streamable-http) or stdio transport.
+"""Typed calculator MCP client — HTTP (streamable-http) or stdio transport.
 
-**HTTP (default)** — start the server first, then the client:
+**HTTP (default)** — start the server first:
 
-    uv run python src/demos/01-calculator/server.py
-    uv run python src/demos/01-calculator/client.py
+    uv run python src/demos/02-typed-calculator/server.py
+    uv run python src/demos/02-typed-calculator/client.py
 
-**Stdio (one terminal)** — spawns the server as a subprocess:
+**Stdio (one terminal)**:
 
-    uv run python src/demos/01-calculator/client.py --stdio
+    uv run python src/demos/02-typed-calculator/client.py --stdio
 """
 
 from __future__ import annotations
@@ -36,11 +36,11 @@ def _http_connection_help() -> str:
 
 Fix (pick one):
   1) Two terminals — start the server, then the client:
-       uv run python src/demos/01-calculator/server.py
-       uv run python src/demos/01-calculator/client.py
+       uv run python src/demos/02-typed-calculator/server.py
+       uv run python src/demos/02-typed-calculator/client.py
 
   2) One terminal — stdio (client starts the server for you):
-       uv run python src/demos/01-calculator/client.py --stdio
+       uv run python src/demos/02-typed-calculator/client.py --stdio
 """
 
 
@@ -66,22 +66,24 @@ async def demo_session(session: ClientSession) -> None:
         print(f"  {prompt.name}: {prompt.description}")
     print()
 
+    # Tools take one parameter `request` matching BinaryOpRequest (see server / Inspector schema).
     examples = [
-        ("add", {"a": 10.0, "b": 3.0}),
-        ("subtract", {"a": 10.0, "b": 3.0}),
-        ("multiply", {"a": 10.0, "b": 3.0}),
-        ("divide", {"a": 10.0, "b": 3.0}),
-        ("divide", {"a": 10.0, "b": 0.0}),  # expected error
+        ("add", {"request": {"a": 10.0, "b": 3.0}}),
+        ("subtract", {"request": {"a": 10.0, "b": 3.0}}),
+        ("multiply", {"request": {"a": 10.0, "b": 3.0}}),
+        ("divide", {"request": {"a": 10.0, "b": 3.0}}),
+        ("divide", {"request": {"a": 10.0, "b": 0.0}}),  # expected error
     ]
 
     print("Tool calls:")
     for tool_name, args in examples:
+        req = args["request"]
         try:
             result = await session.call_tool(tool_name, args)
             value = result.content[0].text if result.content else "(no result)"
-            print(f"  {tool_name}({args['a']}, {args['b']}) = {value}")
+            print(f"  {tool_name}({req['a']}, {req['b']}) = {value}")
         except Exception as exc:
-            print(f"  {tool_name}({args['a']}, {args['b']}) → ERROR: {exc}")
+            print(f"  {tool_name}({req['a']}, {req['b']}) → ERROR: {exc}")
 
 
 async def run_http() -> None:
@@ -111,7 +113,7 @@ async def main_async(*, use_stdio: bool) -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Calculator MCP demo client (HTTP or stdio).",
+        description="Typed calculator MCP demo client (HTTP or stdio).",
     )
     parser.add_argument(
         "--stdio",

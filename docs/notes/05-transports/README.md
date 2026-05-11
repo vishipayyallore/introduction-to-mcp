@@ -14,15 +14,26 @@ The most common transport for local servers.
 
 **Use when:** the server runs locally on the same machine as the host.
 
+## Streamable HTTP
+
+The modern MCP transport for network-accessible servers (used by this repository).
+
+- Client sends requests via HTTP POST to the server's `/mcp` endpoint
+- Server returns responses and streams notifications via chunked transfer encoding
+- Supports both request/response and server-push notification patterns
+- The Python SDK exposes this as `streamable-http` in `mcp.run(transport=...)`
+
+**Use when:** the server is remote, shared across clients, or deployed as a cloud service.
+
 ## HTTP with SSE (Server-Sent Events)
 
-Used for remote servers accessible over a network.
+An earlier MCP HTTP transport, superseded by Streamable HTTP.
 
 - Client sends requests via HTTP POST to the server's endpoint
 - Server streams responses and notifications back via SSE
 - Enables servers hosted as web services
 
-**Use when:** the server is remote, shared across clients, or deployed as a cloud service.
+**Use when:** you need compatibility with older MCP host implementations.
 
 ## Message Format
 
@@ -44,7 +55,8 @@ All transports carry **JSON-RPC 2.0** messages:
 | Scenario | Transport |
 |---|---|
 | Local CLI tool or file system access | stdio |
-| Shared service, remote API, cloud deployment | HTTP + SSE |
+| Shared service, remote API, cloud deployment | Streamable HTTP |
+| Older MCP host or SSE-only infrastructure | HTTP + SSE |
 | Testing / in-process (same language, same process) | In-memory (SDK-specific) |
 
 ## Next

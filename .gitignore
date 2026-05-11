@@ -430,3 +430,7 @@ FodyWeavers.xsd
 
 ## Source Material
 source-material/
+
+# Demo SQLite databases (created at runtime)
+src/demos/03-leave-manager/*.db
+src/demos/04-project-tracker/*.db

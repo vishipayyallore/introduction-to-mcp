@@ -44,6 +44,116 @@ Hosts can connect to multiple servers simultaneously. The model can call tools a
 in a single conversation — for example, reading from a database server and then writing to
 a file system server in one workflow.
 
+## Reference Projects
+
+The following two projects illustrate how the patterns above translate into working servers.
+Both use SQLite for local storage and Claude Desktop as the client.
+
+---
+
+### Leave Manager Server
+
+**Goal:** Let an AI assistant handle leave requests on behalf of a team — submitting, approving,
+and checking balances — through natural-language conversation.
+
+**Architecture:**
+
+```
+Claude Desktop (client)
+       │  natural-language request
+       ▼
+MCP Protocol
+       │  resolves to a tool or resource
+       ▼
+Leave Manager Server
+       │  SQL query
+       ▼
+SQLite DB (employees + leave_requests tables)
+```
+
+**Data model:**
+- `employees` — id, name, department, manager, annual_leave_balance, sick_leave_balance
+- `leave_requests` — request_id, employee_id, start_date, end_date, type, status
+
+**Tools:**
+
+| Tool | What it does |
+|---|---|
+| `submit_leave_request` | Validates employee/type/balance and inserts a new pending request |
+| `approve_leave_request` | Sets status to approved and decrements the leave balance |
+| `check_leave_balance` | Returns remaining annual and sick leave for one employee |
+| `get_pending_approvals` | Lists all requests awaiting approval |
+| `get_database_stats` | Returns aggregate counts for employees and requests |
+| `add_employee` | Inserts a new employee with fuzzy duplicate detection |
+
+**Resources (read operations):**
+
+| Resource URI | What it returns |
+|---|---|
+| `employees://all` | All employees |
+| `employee://{employee_id}` | One employee by ID |
+| `leave-requests://all` | All leave requests |
+| `leave-requests://employee/{employee_id}` | Requests for one employee |
+| `leave-requests://status/{status}` | Requests filtered by status (pending, approved, denied) |
+
+**Key design decisions:**
+- Resources for reads, tools for writes — this keeps read-only queries cheaper
+  (no tool-call cost) and separates query intent from mutation intent.
+- Leave balance check happens inside `submit_leave_request` before insert — the server
+  enforces the rule, not the model.
+- The DB is created with sample data on first run if it does not already exist.
+
+---
+
+### Project Management Server
+
+**Goal:** Give an AI assistant full visibility into a project tracker — creating tickets, updating
+workflow status, and querying data through stable URI identifiers.
+
+**Architecture:** Identical to the leave manager — Claude Desktop → MCP → server → SQLite.
+
+**Data model:**
+- `projects` — project_id, name, description, status, created_date
+- `tickets` — ticket_id, title, description, status, priority, assignee, reporter,
+  created_date, updated_date, due_date, project (name, text), tag
+
+**Tools (write operations):**
+
+| Tool | What it does |
+|---|---|
+| `create_ticket` | Inserts a new pending ticket into a named project |
+| `update_ticket_status` | Moves a ticket through the workflow (`pending` / `in_progress` / `completed` / `closed`) |
+
+**Resources (read operations):**
+
+| Resource URI | What it returns |
+|---|---|
+| `tickets://all` | All tickets |
+| `ticket://{ticket_id}` | One ticket by id (e.g. `TK001`) |
+| `tickets://for-project/{project_id}` | All tickets for a project (e.g. `PROJ001`) |
+| `tickets://status/{status}` | Tickets filtered by workflow status |
+| `tickets://assignee/{assignee}` | Tickets assigned to a named person |
+| `projects://all` | All projects with ticket counts |
+| `project://{project_id}` | Project detail and per-status ticket breakdown |
+
+**Key design decisions:**
+- URI segments use stable identifiers (`TK001`, `PROJ001`) rather than names with spaces,
+  so resource paths remain valid across renames.
+- `project` on the ticket row stores the human-readable project name; the server resolves
+  project_id → name internally when serving `tickets://for-project/{project_id}`.
+- Resources always reflect the latest DB state; tools mutate it. This separation makes
+  the data flow predictable: write via tool, read via resource.
+
+**Lessons from building this server:**
+- Initialize the database *before* registering tools. If `init_db()` is called after
+  `mcp.run()`, tools may fire before the schema exists.
+- When the model uses the wrong tool for a query, the tool description is usually the cause —
+  not the model. Make descriptions unambiguous about input format and expected output.
+- Use the MCP log file (Claude Desktop → Developer → Open MCP Log File) to confirm which
+  tool was called and what arguments were passed.
+
+---
+
 ## Evaluating Whether to Build an MCP Server
 
 Build one when:

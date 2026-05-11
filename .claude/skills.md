@@ -9,40 +9,34 @@ Extends the root `skills.md` with Claude-specific application notes. See
 
 ## Core Skills
 
-1. **Educational content design** — structure 30-minute beginner Python sessions with clear
-   objectives, concept explanations, worked examples, and practice files.
+1. **MCP server implementation** — write FastMCP servers with tools, resources, and prompts;
+   configure stdio and Streamable HTTP transports; use `asyncio.to_thread` for blocking I/O.
 2. **Zero-copy transformation** — adapt ideas from instructor intake notes into fully original
-   curriculum content: new wording, new examples, new pedagogical structure.
-3. **Session-to-practice alignment** — keep `docs/sessions/L{level}/S{session}.md` in sync
-   with `src/L{level}/S{session}/` practice files (names, numbering, learning outcomes).
-4. **Markdown quality and link integrity** — validate headings, links, and formatting with
-   `markdownlint-cli2` before finishing doc tasks.
-5. **Python quality checks** — apply `ruff check` and `compileall` with pedagogy-aware lint
-   policy (relax unused-variable warnings in educational demo files).
-6. **Session-bucketing discipline** — route all new content to planned/new sessions; never
-   inject into completed sessions without explicit approval.
-7. **Working → Formal promotion** — follow the five-step promotion workflow when Swamy asks
-   to move a file from `src/Working/` to `src/L{level}/S{session}/`.
+   documentation: new wording, new examples, new structure.
+3. **Demo-to-docs alignment** — keep `src/demos/0N-name/README.md` and `docs/notes/` in sync
+   with the actual implementation (tool names, resource URI templates, port numbers, run commands).
+4. **Markdown quality and link integrity** — validate with `markdownlint-cli2` before finishing
+   doc tasks.
+5. **Python quality checks** — apply `ruff check` and `compileall` before completing any task.
+6. **Demo progression discipline** — route new code to unimplemented demo slots (05 onwards);
+   never modify existing completed demos without explicit approval.
 
 ---
 
 ## Guardrails
 
-- **`source-material/` is internal, read-only intake** (often gitignored locally; not guaranteed in
-  every clone). Do not copy source text — not even paraphrased structure — into publish-facing
-  documentation. Transform every idea completely.
-- **Do not surface internal process in curriculum docs.** Intake policy, zero-copy rules, and
-  Working promotion steps are agent/contributor guidance only; omit them from session docs.
-- **Keep references on formal curriculum paths** (`src/L{level}/S{session}/`), never on
-  sandbox paths (`src/Working/`).
-- **Default new additions to planned/new sessions.** Do not inject into completed sessions
-  without Swamy's explicit approval in the current task message.
-- **`src/Working/` is hands-off** unless Swamy explicitly names that path in the current task.
-  Prefer formal `src/L{level}/S{session}/` and `docs/sessions/` for all curriculum work.
+- **`source-material/` is internal, read-only intake** (often gitignored; not in every clone).
+  Do not copy source text into publish-facing docs.
+- **Do not surface internal process in learner docs.** Intake policy is agent/contributor
+  guidance only.
+- **Keep docs accurate:** tool names, resource URI templates, port numbers, and run commands
+  must match the actual implementation in `server.py` and the DB helper files.
+- **Default new additions to unimplemented demo slots** (05 onwards). Do not change existing
+  demos without Swamy's explicit approval.
 
 ## Runnable skills vs repository instructions
 
-There is **no** separate installable skill file under `.claude/`, `.cursor/`, or `.github/` whose
-sole scope is `source-material/`. Zero-copy and intake expectations live in shared **rules and
-AGENTS** files; this document and root **`skills.md`** describe how to apply those expectations in
-practice.
+There is **no** separate installable skill file under `.claude/`, `.cursor/`, or `.github/`
+whose sole scope is `source-material/`. Zero-copy and intake expectations live in shared rules
+and AGENTS files; this document and root `skills.md` describe how to apply those expectations
+in practice.

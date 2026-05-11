@@ -1,0 +1,20 @@
+# Markdownlint defaults tuned for long-form educational notes in this repository.
+# Keeps serious rules (headings, links, duplicate headings) while relaxing stylistic
+# rules that produced hundreds of false positives in docs/notes (tables, line wrap).
+
+default: true
+
+# Line length — curriculum prose and wide table cells routinely exceed 80 columns.
+MD013: false
+
+# Allow compact tables (|Col|Col|) without padding spaces (common in notes).
+MD060: false
+
+# Lists immediately after paragraphs — common in tutorial-style markdown.
+MD032: false
+
+# Fenced blocks without a language tag — used for plain diagrams or excerpts.
+MD040: false
+
+# Bold lead-in lines used as informal subheads in some notes.
+MD036: false

@@ -1,13 +1,13 @@
-"""Calculator MCP client — HTTP (streamable-http) or stdio transport.
+"""Project Tracker MCP client - HTTP (streamable-http) or stdio transport.
 
-**HTTP (default)** — start the server first, then the client:
+**HTTP (default)** - start the server first:
 
-    uv run python src/demos/01-calculator/server.py
-    uv run python src/demos/01-calculator/client.py
+    uv run python src/demos/04-project-tracker/server.py
+    uv run python src/demos/04-project-tracker/client.py
 
-**Stdio (one terminal)** — spawns the server as a subprocess:
+**Stdio (one terminal)**:
 
-    uv run python src/demos/01-calculator/client.py --stdio
+    uv run python src/demos/04-project-tracker/client.py --stdio
 """
 
 from __future__ import annotations
@@ -19,6 +19,7 @@ from pathlib import Path
 
 import httpx
 from mcp import ClientSession
+from pydantic import AnyUrl
 from mcp.client.stdio import StdioServerParameters, stdio_client
 from mcp.client.streamable_http import streamablehttp_client
 
@@ -35,17 +36,17 @@ def _http_connection_help() -> str:
   {SERVER_URL}
 
 Fix (pick one):
-  1) Two terminals — start the server, then the client:
-       uv run python src/demos/01-calculator/server.py
-       uv run python src/demos/01-calculator/client.py
+  1) Two terminals - start the server, then the client:
+       uv run python src/demos/04-project-tracker/server.py
+       uv run python src/demos/04-project-tracker/client.py
 
-  2) One terminal — stdio (client starts the server for you):
-       uv run python src/demos/01-calculator/client.py --stdio
+  2) One terminal - stdio (client starts the server for you):
+       uv run python src/demos/04-project-tracker/client.py --stdio
 """
 
 
 async def demo_session(session: ClientSession) -> None:
-    """List tools/resources/prompts and run sample tool calls."""
+    """List tools/resources/templates and run sample calls."""
     await session.initialize()
 
     tools_response = await session.list_tools()
@@ -60,28 +61,60 @@ async def demo_session(session: ClientSession) -> None:
         print(f"  {resource.uri}: {resource.description}")
     print()
 
-    prompts_response = await session.list_prompts()
-    print("Available prompts:")
-    for prompt in prompts_response.prompts:
-        print(f"  {prompt.name}: {prompt.description}")
+    tmpl_response = await session.list_resource_templates()
+    print("Resource templates:")
+    for tmpl in tmpl_response.resourceTemplates:
+        print(f"  {tmpl.uriTemplate}: {tmpl.description}")
     print()
 
+    prompts_response = await session.list_prompts()
+    print("Available prompts:")
+    if not prompts_response.prompts:
+        print("  (none in this demo)")
+    else:
+        for prompt in prompts_response.prompts:
+            print(f"  {prompt.name}: {prompt.description}")
+    print()
+
+    print("Sample reads (stateful DB snapshots):")
+    for uri in ("ticket://TK002", "tickets://for-project/PROJ002", "project://PROJ001"):
+        try:
+            rr = await session.read_resource(AnyUrl(uri))
+            block = rr.contents[0].text if rr.contents else "(empty)"
+            preview = block if len(block) < 400 else block[:400] + "..."
+            print(f"  read_resource({uri}) ->\n{preview}\n")
+        except Exception as exc:
+            print(f"  read_resource({uri}) -> ERROR: {exc}\n")
+
     examples = [
-        ("add", {"a": 10.0, "b": 3.0}),
-        ("subtract", {"a": 10.0, "b": 3.0}),
-        ("multiply", {"a": 10.0, "b": 3.0}),
-        ("divide", {"a": 10.0, "b": 3.0}),
-        ("divide", {"a": 10.0, "b": 0.0}),  # expected error
+        (
+            "update_ticket_status",
+            {"ticket_id": "TK004", "new_status": "in_progress", "updater": "MCP Client Demo"},
+        ),
+        (
+            "create_ticket",
+            {
+                "title": "Docs: MCP resource URIs",
+                "description": "Document ticket:// and tickets://for-project patterns.",
+                "priority": "low",
+                "assignee": "Nick Chen",
+                "reporter": "Sarah Davis",
+                "project": "API Integration",
+                "due_date": "",
+                "tags": "docs,mcp",
+            },
+        ),
     ]
 
     print("Tool calls:")
     for tool_name, args in examples:
         try:
             result = await session.call_tool(tool_name, args)
-            value = result.content[0].text if result.content else "(no result)"
-            print(f"  {tool_name}({args['a']}, {args['b']}) = {value}")
+            text = result.content[0].text if result.content else "(no result)"
+            preview = text if len(text) < 400 else text[:400] + "..."
+            print(f"  {tool_name} -> {preview}")
         except Exception as exc:
-            print(f"  {tool_name}({args['a']}, {args['b']}) → ERROR: {exc}")
+            print(f"  {tool_name} -> ERROR: {exc}")
 
 
 async def run_http() -> None:
@@ -91,7 +124,6 @@ async def run_http() -> None:
 
 
 async def run_stdio() -> None:
-    """Spawn server with stdio transport (no separate HTTP server)."""
     params = StdioServerParameters(
         command="uv",
         args=["run", "python", str(_SERVER_SCRIPT), "--transport", "stdio"],
@@ -111,7 +143,7 @@ async def main_async(*, use_stdio: bool) -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Calculator MCP demo client (HTTP or stdio).",
+        description="Project Tracker MCP demo client (HTTP or stdio).",
     )
     parser.add_argument(
         "--stdio",

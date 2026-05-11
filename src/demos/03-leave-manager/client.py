@@ -1,13 +1,13 @@
-"""Calculator MCP client — HTTP (streamable-http) or stdio transport.
+"""Leave Manager MCP client — HTTP (streamable-http) or stdio transport.
 
-**HTTP (default)** — start the server first, then the client:
+**HTTP (default)** — start the server first:
 
-    uv run python src/demos/01-calculator/server.py
-    uv run python src/demos/01-calculator/client.py
+    uv run python src/demos/03-leave-manager/server.py
+    uv run python src/demos/03-leave-manager/client.py
 
-**Stdio (one terminal)** — spawns the server as a subprocess:
+**Stdio (one terminal)**:
 
-    uv run python src/demos/01-calculator/client.py --stdio
+    uv run python src/demos/03-leave-manager/client.py --stdio
 """
 
 from __future__ import annotations
@@ -36,16 +36,16 @@ def _http_connection_help() -> str:
 
 Fix (pick one):
   1) Two terminals — start the server, then the client:
-       uv run python src/demos/01-calculator/server.py
-       uv run python src/demos/01-calculator/client.py
+       uv run python src/demos/03-leave-manager/server.py
+       uv run python src/demos/03-leave-manager/client.py
 
   2) One terminal — stdio (client starts the server for you):
-       uv run python src/demos/01-calculator/client.py --stdio
+       uv run python src/demos/03-leave-manager/client.py --stdio
 """
 
 
 async def demo_session(session: ClientSession) -> None:
-    """List tools/resources/prompts and run sample tool calls."""
+    """List tools/resources and run sample async tool calls."""
     await session.initialize()
 
     tools_response = await session.list_tools()
@@ -62,26 +62,39 @@ async def demo_session(session: ClientSession) -> None:
 
     prompts_response = await session.list_prompts()
     print("Available prompts:")
-    for prompt in prompts_response.prompts:
-        print(f"  {prompt.name}: {prompt.description}")
+    if not prompts_response.prompts:
+        print("  (none in this demo)")
+    else:
+        for prompt in prompts_response.prompts:
+            print(f"  {prompt.name}: {prompt.description}")
     print()
 
     examples = [
-        ("add", {"a": 10.0, "b": 3.0}),
-        ("subtract", {"a": 10.0, "b": 3.0}),
-        ("multiply", {"a": 10.0, "b": 3.0}),
-        ("divide", {"a": 10.0, "b": 3.0}),
-        ("divide", {"a": 10.0, "b": 0.0}),  # expected error
+        ("check_leave_balance", {"employee_id": "EMP001"}),
+        ("get_database_stats", {}),
+        ("get_pending_approvals", {}),
+        (
+            "submit_leave_request",
+            {
+                "employee_id": "EMP005",
+                "start_date": "2026-06-10",
+                "end_date": "2026-06-12",
+                "leave_type": "annual",
+                "reason": "Team offsite planning",
+                "days_requested": 3,
+            },
+        ),
     ]
 
     print("Tool calls:")
     for tool_name, args in examples:
         try:
             result = await session.call_tool(tool_name, args)
-            value = result.content[0].text if result.content else "(no result)"
-            print(f"  {tool_name}({args['a']}, {args['b']}) = {value}")
+            text = result.content[0].text if result.content else "(no result)"
+            preview = text if len(text) < 320 else text[:320] + "..."
+            print(f"  {tool_name} -> {preview}")
         except Exception as exc:
-            print(f"  {tool_name}({args['a']}, {args['b']}) → ERROR: {exc}")
+            print(f"  {tool_name} -> ERROR: {exc}")
 
 
 async def run_http() -> None:
@@ -91,7 +104,6 @@ async def run_http() -> None:
 
 
 async def run_stdio() -> None:
-    """Spawn server with stdio transport (no separate HTTP server)."""
     params = StdioServerParameters(
         command="uv",
         args=["run", "python", str(_SERVER_SCRIPT), "--transport", "stdio"],
@@ -111,7 +123,7 @@ async def main_async(*, use_stdio: bool) -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Calculator MCP demo client (HTTP or stdio).",
+        description="Leave Manager MCP demo client (HTTP or stdio).",
     )
     parser.add_argument(
         "--stdio",

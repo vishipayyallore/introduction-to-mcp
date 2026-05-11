@@ -5,9 +5,8 @@ Read those together with `.claude/AGENTS.md` and `.claude/rules/` for the full p
 
 ## Placement Guardrails
 
-Default all new content to planned or new sessions. Do not add to completed sessions without
-Swamy's explicit approval in the current task message.
-When uncertain, consult `docs/meetup/L1/meetup-sessions.md` and ask before writing.
-
-`src/Working/` is hands-off unless Swamy explicitly names that path in the current task.
-All formal curriculum edits go to `src/L{level}/S{session}/` and `docs/sessions/L{level}/`.
+Default new demos and documentation to unimplemented demo slots (05 onwards).
+Do not modify existing completed demos without Swamy's explicit approval in the current task.
+Do not reference `source-material/` paths in any learner-facing file.
+All demo changes go to `src/demos/0N-name/` and documentation to `docs/notes/` or
+`docs/references/`.

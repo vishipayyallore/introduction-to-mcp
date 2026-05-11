@@ -20,6 +20,7 @@ for building MCP servers with decorators.
 01-calculator/
 ├── server.py          # FastMCP server: 4 tools, 1 resource, 1 prompt
 ├── client.py          # Client: HTTP (default) or stdio (--stdio)
+├── settings.py        # Shared loader for config/settings.json (server + client)
 └── config/
     └── settings.json  # host, port, transport, server name
 ```
@@ -151,3 +152,11 @@ Host, port, and transport are read from `config/settings.json`.
 - **`calculation://help`** — plain-text reference guide for the tools
 - **`evaluate(expression)`** — generates a prompt asking the model to solve an
   expression using only the calculator tools
+
+## What's next
+
+For **Pydantic** models, validation, and richer tool metadata,
+continue with [typed calculator Demo 02](../02-typed-calculator/README.md).
+
+It listens on port `8001` and keeps the same transports and client layout as
+this demo.

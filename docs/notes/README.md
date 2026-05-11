@@ -4,6 +4,7 @@ A structured collection of theory and conceptual notes on the Model Context Prot
 
 ## Topics
 
+- [Setup](setup/README.md) — Python, uv, Claude Desktop, and the MCP package
 1. [Introduction](01-introduction/README.md) — What MCP is, why it exists, and the problem it solves
 2. [MCP Architecture](02-architecture/README.md) — Core design, components, and how they interact
 3. [Clients and Servers](03-clients-and-servers/README.md) — Roles, responsibilities, and lifecycle
@@ -19,6 +20,7 @@ A structured collection of theory and conceptual notes on the Model Context Prot
 docs/
 ├── images/          # diagrams and screenshots
 └── notes/           # theory and conceptual notes (this folder)
+    ├── setup/
     ├── 01-introduction/
     ├── 02-architecture/
     ├── 03-clients-and-servers/
@@ -29,4 +31,4 @@ docs/
     └── 08-real-world-use-cases/
 ```
 
-Experiments and prototypes live in `src/`. Copied or reference articles go in `source-material/`.
+Experiments and prototypes live in `src/`.
