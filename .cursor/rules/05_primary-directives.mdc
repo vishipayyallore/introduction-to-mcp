@@ -1,0 +1,82 @@
+---
+description: Primary directives and precedence rules for all AI assistants in this repository
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Primary Directives
+
+These directives override defaults and apply to all AI assistant interactions in this repository.
+
+## Precedence Order
+
+When instructions conflict, apply in this order (highest to lowest):
+
+1. Explicit instruction in the current user message.
+2. Root `CLAUDE.md` and root `AGENTS.md`.
+3. `.cursor/rules/` rule files (this file and siblings).
+4. `.github/copilot-instructions.md`.
+5. `.claude/AGENTS.md` and `.claude/skills.md`.
+6. `skills.md` at repository root.
+7. Model defaults.
+
+---
+
+## Minimal-Edit Principle
+
+Make targeted, minimal changes. Read the full file before editing.
+If a change feels broad or risky, ask first.
+Do not refactor, restructure, or clean up content beyond the explicit task scope.
+
+## Structural Preservation
+
+Do not reorder sections, rename headings, or restructure existing session documents without approval.
+Learner flow and progression depend on consistent structure across sessions.
+
+## Session-Bucketing Safety
+
+Route all new content — including material adapted from `source-material/` — to planned or new sessions.
+Do not add content to completed sessions without Swamy's explicit go-ahead in the current task message.
+
+---
+
+## Do Not Surface Internal Process in Publish-Facing Docs
+
+The Internal Content Intake Policy (source-material handling, zero-copy rules, Working promotion
+workflow) is process guidance for AI assistants and contributors only. It must **not** appear as a
+visible policy block or section in any publish-facing content, including:
+
+- Session documentation (`docs/sessions/`)
+- README files
+- Any user-facing curriculum page or reference guide
+
+Internal policy belongs **only** in these instruction surfaces:
+`.github/copilot-instructions.md`, `.cursor/rules/`, `CLAUDE.md`, `AGENTS.md`, `.claude/` (including
+`.claude/rules/`), `skills.md`.
+
+Brief, factual repository layout notes in **README** (for example, that `source-material/` may
+exist locally and is gitignored) are allowed. Do **not** paste full intake workflows, zero-copy
+checklists, or session-bucketing procedure into publish-facing curriculum pages or README as a
+policy block.
+
+---
+
+## `src/Working/` is Hands-Off
+
+Do not create, edit, move, rename, or delete any file under `src/Working/` unless Swamy explicitly
+names that path or folder in the current task message. This rule has no exceptions based on context
+or inference — do not apply it transitively (e.g., "this session uses Working files, so I'll update them").
+
+Formal curriculum edits go to `src/L{level}/S{session}/` and `docs/sessions/L{level}/`.
+Sandbox promotion happens only when Swamy explicitly asks.
+
+---
+
+## Validation Before Finishing
+
+Run before completing any code-touching task:
+
+- `ruff check src`
+- `python -m compileall -q src`
+- `npx --yes markdownlint-cli2 "README.md" "docs/**/*.md" ".github/**/*.md"`
+- `./tools/psscripts/docs-links.ps1` (Docker required)

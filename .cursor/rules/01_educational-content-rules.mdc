@@ -1,0 +1,67 @@
+---
+description: Educational content creation rules for the Python Fundamentals curriculum
+globs: ["docs/**/*.md", "src/**/*.py", "*.md"]
+alwaysApply: true
+---
+
+# Educational Content Rules
+
+## Output Quality
+
+All curriculum output — session docs, practice files, explanations — must be:
+
+- Original and transformative in structure, wording, and examples.
+- Beginner-friendly: designed for 30-minute session blocks with concrete, relatable examples.
+- Technically accurate; all `.py` files must run without errors.
+- Structurally consistent with the existing session template (objectives, concepts, practice refs, takeaways).
+
+---
+
+## Internal Source Intake Rules
+
+These rules govern how content from `source-material/` enters the curriculum.
+`source-material/` is **internal, read-only** intake: instructor notes and raw session transcripts.
+
+### What this means in practice
+
+Treat every file in `source-material/` as:
+
+- **Internal only** — never cite, link to, or reference in publish-facing docs.
+- **Read-only inspiration** — extract only the core concept or identified student misconception.
+- **Requiring full rewrite** — restate every idea in fresh language, with new examples and a
+  new pedagogical structure. Do not preserve original wording, sentence structure, or section order.
+
+When the source covers a concept, ask: *what is the core insight a beginner needs?*
+Then explain that insight entirely from scratch with original examples and student-facing language.
+
+---
+
+## Zero-Copy Enforcement
+
+Never copy any block of text verbatim from source-material, third-party books, or transcripts.
+Paraphrase that preserves the original sentence structure also fails this requirement.
+
+Test: could a reader trace the output back to the source text? If yes, rewrite completely.
+
+---
+
+## Session Document Structure
+
+Every session doc must include: learning objectives, concept explanations, practice file references,
+and key takeaways. Keep references on formal paths (`src/L{level}/S{session}/`), never sandbox paths.
+
+---
+
+## Practice File Rules
+
+- Naming: `01_name.py`, `02_name.py`, … (sequential within the session folder).
+- Must include: file-header comment, `HELP_TEXT`, `main()`, `raise SystemExit(main(sys.argv))`.
+- Must run cleanly: `python -m compileall -q src` and `ruff check src`.
+
+---
+
+## Placement Guardrails
+
+Default all new content — from any source, including source-material — to planned or new sessions.
+Do not add to completed sessions without Swamy's explicit approval in the current task message.
+When uncertain, consult `docs/meetup/L1/meetup-sessions.md` and ask.
