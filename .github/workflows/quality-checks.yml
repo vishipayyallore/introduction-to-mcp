@@ -6,6 +6,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -31,7 +34,7 @@ jobs:
         run: uv sync --all-groups --link-mode=copy
 
       - name: Ruff
-        run: uv run ruff check src
+        run: uvx ruff check src
 
       - name: Compileall
         run: uv run python -m compileall -q src
