@@ -1,4 +1,4 @@
-"""Leave Manager MCP server — SQLite-backed HR demo with **async tools** (Demo 03).
+"""Leave Manager MCP server - SQLite-backed HR demo with **async tools** (Demo 03).
 
 HTTP mode (http://127.0.0.1:8002/mcp):
 
@@ -9,7 +9,7 @@ Stdio (Inspector / subprocess clients):
     uv run python src/demos/03-leave-manager/server.py --transport stdio
 
 Mutating tools await a short sleep (simulated HR latency) and run SQLite work in a worker
-thread via ``asyncio.to_thread`` so the event loop stays responsive — the pattern this demo
+thread via ``asyncio.to_thread`` so the event loop stays responsive - the pattern this demo
 teaches for async MCP servers backed by blocking I/O.
 """
 
@@ -84,7 +84,7 @@ async def submit_leave_request(
     reason: str,
     days_requested: int,
 ) -> str:
-    """Submit a new leave request (async — simulated HR round-trip + background DB write)."""
+    """Submit a new leave request (async: simulated HR round-trip + background DB write)."""
     await asyncio.sleep(_SIM_HR_ROUND_TRIP_S)
     return await asyncio.to_thread(
         leave_db.submit_leave_request_impl,

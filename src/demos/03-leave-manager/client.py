@@ -91,10 +91,10 @@ async def demo_session(session: ClientSession) -> None:
         try:
             result = await session.call_tool(tool_name, args)
             text = result.content[0].text if result.content else "(no result)"
-            preview = text if len(text) < 320 else text[:320] + "…"
-            print(f"  {tool_name} → {preview}")
+            preview = text if len(text) < 320 else text[:320] + "..."
+            print(f"  {tool_name} -> {preview}")
         except Exception as exc:
-            print(f"  {tool_name} → ERROR: {exc}")
+            print(f"  {tool_name} -> ERROR: {exc}")
 
 
 async def run_http() -> None:
