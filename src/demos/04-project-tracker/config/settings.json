@@ -1,0 +1,10 @@
+{
+  "server": {
+    "name": "project-tracker",
+    "version": "0.1.0"
+  },
+  "transport": "streamable-http",
+  "host": "127.0.0.1",
+  "port": 8003,
+  "log_level": "INFO"
+}
