@@ -2,6 +2,12 @@
 
 Repository agent guidance for automation and code assistants.
 
+## Naming and Numbering Conventions
+
+- Sequential files use a two-digit prefix: `01_name.py`, `01-topic/`, `02-topic/`.
+- **Numbers must start at `01`, never `00`.** Files and folders prefixed `00_` or `00-` are forbidden.
+- Support folders with no natural sequence position (e.g., `setup/`, `references/`) carry no numeric prefix.
+
 ## Default Agent Responsibilities
 
 1. Preserve existing educational structure and learner flow.

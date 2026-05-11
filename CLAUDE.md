@@ -125,6 +125,7 @@ raise SystemExit(main(sys.argv))
 ## 💻 Practice Code (`src/L{level}/S{session}/`)
 
 - Files named `01_name.py`, `02_name.py`, …
+- **Numbers start at `01_` — never `00_`.** Zero-prefixed names are forbidden for all files and folders.
 - All files must run without errors.
 - Include a file-header comment: `# Filename: src/L1/S2/01_variables.py`.
 

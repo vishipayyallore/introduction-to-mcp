@@ -5,6 +5,14 @@ root `CLAUDE.md` and root `AGENTS.md` for baseline policy.
 
 ---
 
+## Naming and Numbering Conventions
+
+- Sequential files and folders use a two-digit prefix starting at `01`: `01_name.py`, `01-topic/`.
+- **`00_` and `00-` prefixes are forbidden** for all files and folders, no exceptions.
+- Unnumbered support folders (e.g., `setup/`, `references/`) carry no numeric prefix.
+
+---
+
 ## Core Responsibilities
 
 1. Preserve learner flow and existing session structure.
