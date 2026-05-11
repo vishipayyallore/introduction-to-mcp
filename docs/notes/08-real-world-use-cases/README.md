@@ -72,27 +72,29 @@ SQLite DB (employees + leave_requests tables)
 ```
 
 **Data model:**
-- `employees` — id, name, department, manager, sick_leave_balance, general_leave_balance
+- `employees` — id, name, department, manager, annual_leave_balance, sick_leave_balance
 - `leave_requests` — request_id, employee_id, start_date, end_date, type, status
 
-**Tools (write operations):**
+**Tools:**
 
 | Tool | What it does |
 |---|---|
-| `submit_leave_request` | Validates leave balance and inserts a new request |
-| `approve_leave_request` | Sets status to approved for a given request ID |
-| `deny_leave_request` | Sets status to denied with an optional reason |
-| `add_employee` | Inserts a new employee record |
+| `submit_leave_request` | Validates and inserts a new pending request |
+| `approve_leave_request` | Sets status to approved and decrements the leave balance |
+| `check_leave_balance` | Returns remaining annual and sick leave for one employee |
+| `get_pending_approvals` | Lists all requests awaiting approval |
+| `get_database_stats` | Returns aggregate counts for employees and requests |
+| `add_employee` | Inserts a new employee with fuzzy duplicate detection |
 
 **Resources (read operations):**
 
 | Resource URI | What it returns |
 |---|---|
 | `employees://all` | All employees |
-| `employees://{id}` | One employee by ID |
-| `leaves://all` | All leave requests |
-| `leaves://employee/{id}` | Leaves for one employee |
-| `leaves://pending` | Requests awaiting approval |
+| `employee://{employee_id}` | One employee by ID |
+| `leave-requests://all` | All leave requests |
+| `leave-requests://employee/{employee_id}` | Requests for one employee |
+| `leave-requests://status/{status}` | Requests filtered by status (pending, approved, denied) |
 
 **Key design decisions:**
 - Resources for reads, tools for writes — this keeps read-only queries cheaper
