@@ -106,37 +106,41 @@ SQLite DB (employees + leave_requests tables)
 ### Project Management Server
 
 **Goal:** Give an AI assistant full visibility into a project tracker — creating tickets, updating
-status, assigning work, and querying overdue items through conversation.
+workflow status, and querying data through stable URI identifiers.
 
 **Architecture:** Identical to the leave manager — Claude Desktop → MCP → server → SQLite.
 
 **Data model:**
-- `projects` — id, name, description, owner, created_at
-- `tickets` — id, project_id, title, description, status, priority, assignee, due_date, tags
+- `projects` — project_id, name, description, status, created_date
+- `tickets` — ticket_id, title, description, status, priority, assignee, reporter,
+  created_date, updated_date, due_date, project (name, text), tag
 
-**Tools:**
+**Tools (write operations):**
 
 | Tool | What it does |
 |---|---|
-| `create_ticket` | Adds a ticket to a project |
-| `update_ticket_status` | Changes a ticket's status |
-| `assign_ticket` | Sets the assignee |
-| `create_project` | Adds a project |
-| `search_tickets` | Full-text search across title and description |
-| `get_overdue_tickets` | Returns tickets past their due date |
-| `update_ticket_priority` | Changes priority level |
-| `add_ticket_tags` | Appends tags to an existing ticket |
+| `create_ticket` | Inserts a new pending ticket into a named project |
+| `update_ticket_status` | Moves a ticket through the workflow (`pending` / `in_progress` / `completed` / `closed`) |
 
-**Resources:**
+**Resources (read operations):**
 
 | Resource URI | What it returns |
 |---|---|
 | `tickets://all` | All tickets |
-| `tickets://{id}` | One ticket by ID |
-| `projects://all` | All projects |
-| `projects://{name}` | One project by name |
-| `tickets://status/{status}` | Tickets filtered by status |
-| `tickets://assignee/{name}` | Tickets for a specific person |
+| `ticket://{ticket_id}` | One ticket by id (e.g. `TK001`) |
+| `tickets://for-project/{project_id}` | All tickets for a project (e.g. `PROJ001`) |
+| `tickets://status/{status}` | Tickets filtered by workflow status |
+| `tickets://assignee/{assignee}` | Tickets assigned to a named person |
+| `projects://all` | All projects with ticket counts |
+| `project://{project_id}` | Project detail and per-status ticket breakdown |
+
+**Key design decisions:**
+- URI segments use stable identifiers (`TK001`, `PROJ001`) rather than names with spaces,
+  so resource paths remain valid across renames.
+- `project` on the ticket row stores the human-readable project name; the server resolves
+  project_id → name internally when serving `tickets://for-project/{project_id}`.
+- Resources always reflect the latest DB state; tools mutate it. This separation makes
+  the data flow predictable: write via tool, read via resource.
 
 **Lessons from building this server:**
 - Initialize the database *before* registering tools. If `init_db()` is called after

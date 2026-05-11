@@ -36,7 +36,7 @@ These demos are designed to teach:
 | 01 | [Basic FastMCP calculator](01-calculator/) | Build a minimal FastMCP server with tools, resources, prompts, and dual transport support (stdio + Streamable HTTP). Learn MCP fundamentals and Inspector workflows. |
 | 02 | [Typed contracts + validation](02-typed-calculator/) | Use Pydantic request/response models for structured tool contracts, schema generation, validation, and typed MCP interactions. |
 | 03 | [Async tools — Leave Manager](03-leave-manager/) | Implement async MCP tools with `async/await`, background operations, concurrency, cancellation handling, and latency-aware workflows. |
-| 04 | [Stateful resources — Project Tracker](04-project-tracker/) | Build dynamic resources with URI parameters, session-aware state, calculation history, and contextual resource retrieval. |
+| 04 | [Stateful resources — Project Tracker](04-project-tracker/) | Build dynamic resources with URI templates, understand how tool mutations are reflected in resource snapshots, and navigate data using stable URI identifiers. |
 | 05 | Multi-tool orchestration | Coordinate multiple MCP tools in a single workflow, compose tool pipelines, and manage intermediate execution state. |
 | 06 | External API integration | Connect MCP tools to REST APIs, databases, and third-party services with retries, timeouts, serialization, and error handling. |
 | 07 | Authentication | Add API keys, bearer tokens, environment-based secrets, authorization middleware, and secure transport practices. |
