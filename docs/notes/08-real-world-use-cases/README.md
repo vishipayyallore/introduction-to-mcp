@@ -54,7 +54,7 @@ Both use SQLite for local storage and Claude Desktop as the client.
 ### Leave Manager Server
 
 **Goal:** Let an AI assistant handle leave requests on behalf of a team — submitting, approving,
-denying, and checking balances — through natural-language conversation.
+and checking balances — through natural-language conversation.
 
 **Architecture:**
 
@@ -79,7 +79,7 @@ SQLite DB (employees + leave_requests tables)
 
 | Tool | What it does |
 |---|---|
-| `submit_leave_request` | Validates and inserts a new pending request |
+| `submit_leave_request` | Validates employee/type/balance and inserts a new pending request |
 | `approve_leave_request` | Sets status to approved and decrements the leave balance |
 | `check_leave_balance` | Returns remaining annual and sick leave for one employee |
 | `get_pending_approvals` | Lists all requests awaiting approval |
