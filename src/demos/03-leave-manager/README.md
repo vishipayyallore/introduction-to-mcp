@@ -112,7 +112,8 @@ Start the HTTP server first, then `mcp dev` with **URL** `http://127.0.0.1:8002/
 
 ## Roadmap
 
-Demo **04** (stateful resources / richer templates) can extend URI patterns or session-scoped
-history; **production** SQLite usage would typically move to connection pooling or `aiosqlite`.
+Continue with **[04-project-tracker](../04-project-tracker/README.md)** for Demo **04**
+(stateful SQLite + many URI templates). **Production** SQLite usage would typically move to
+connection pooling or `aiosqlite`.
 
 <!-- markdownlint-enable MD013 -->
