@@ -55,6 +55,7 @@ and key takeaways. Keep references on formal paths (`src/L{level}/S{session}/`),
 ## Practice File Rules
 
 - Naming: `01_name.py`, `02_name.py`, … (sequential within the session folder).
+- **Numbers start at `01_`, never `00_`.** Zero-prefixed (`00_`) names are forbidden for files and folders.
 - Must include: file-header comment, `HELP_TEXT`, `main()`, `raise SystemExit(main(sys.argv))`.
 - Must run cleanly: `python -m compileall -q src` and `ruff check src`.
 

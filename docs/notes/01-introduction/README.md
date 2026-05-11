@@ -69,4 +69,4 @@ problem for editors and language tooling. MCP applies the same idea to AI and ex
 
 ## Next
 
-→ [MCP Architecture](../02-architecture/README.md) | ← [Setup](../00-setup/README.md)
+→ [MCP Architecture](../02-architecture/README.md) | ← [Setup](../setup/README.md)

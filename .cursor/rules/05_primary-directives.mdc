@@ -22,6 +22,15 @@ When instructions conflict, apply in this order (highest to lowest):
 
 ---
 
+## Naming and Numbering Conventions
+
+- Numbered files use a two-digit prefix: `01_name.py`, `02_name.py`, `01-topic/`, `02-topic/`.
+- **Numbers must start at `01`, never `00`.** Any file or folder prefixed with `00_` or `00-` is forbidden.
+- Folder names in `docs/notes/` and `src/demos/` use kebab-case with a two-digit prefix: `01-introduction/`, `07-building-mcp-server/`.
+- Prerequisite or unnumbered support folders (e.g., `setup/`, `references/`) carry no numeric prefix.
+
+---
+
 ## Minimal-Edit Principle
 
 Make targeted, minimal changes. Read the full file before editing.

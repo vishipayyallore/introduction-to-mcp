@@ -82,6 +82,7 @@ Formal curriculum edits go to `src/L{level}/S{session}/` and
 - All files in `src/L{level}/S{session}/` must run without errors.
 - Use the `main` / `HELP_TEXT` / `raise SystemExit(main(sys.argv))` template.
 - Name files sequentially: `01_name.py`, `02_name.py`, …
+- **Numbers start at `01_`, never `00_`.** Zero-prefixed names (`00_`, `00-`) are forbidden for all files and folders.
 - Include a file-header comment: `# Filename: src/L1/S2/01_variables.py`
 
 ---
