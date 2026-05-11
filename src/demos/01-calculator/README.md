@@ -156,5 +156,7 @@ Host, port, and transport are read from `config/settings.json`.
 ## What's next
 
 For **Pydantic** models, validation, and richer tool metadata,
-continue with [typed calculator Demo 02](../02-typed-calculator/README.md). It listens on port
-`8001` and keeps the same transports and client layout as this demo.
+continue with [typed calculator Demo 02](../02-typed-calculator/README.md).
+
+It listens on port `8001` and keeps the same transports and client layout as
+this demo.
