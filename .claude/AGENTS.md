@@ -7,15 +7,16 @@ root `CLAUDE.md` and root `AGENTS.md` for baseline policy.
 
 ## Naming and Numbering Conventions
 
-- Sequential files and folders use a two-digit prefix starting at `01`: `01_name.py`, `01-topic/`.
+- Demo folders use a two-digit prefix starting at `01`: `01-calculator/`, `02-typed-calculator/`.
+- Sequential files use `01_name.py`, `02_name.py`, …
 - **`00_` and `00-` prefixes are forbidden** for all files and folders, no exceptions.
-- Unnumbered support folders (e.g., `setup/`, `references/`) carry no numeric prefix.
+- Unnumbered support folders (e.g., `setup/`, `references/`, `shared/`) carry no numeric prefix.
 
 ---
 
 ## Core Responsibilities
 
-1. Preserve learner flow and existing session structure.
+1. Preserve learner flow and the existing demo progression.
 2. Make targeted edits; ask before broad or risky changes.
 3. Run all quality checks before marking a task complete.
 
@@ -23,37 +24,22 @@ root `CLAUDE.md` and root `AGENTS.md` for baseline policy.
 
 ## Source Intake Policy
 
-`source-material/` is an internal, read-only folder for instructor notes and raw session transcripts.
-Agent output must be **transformative**: rewrite every concept in fresh language, with new examples
-and original pedagogical structure.
+`source-material/` is an internal, read-only folder for instructor notes and raw session
+transcripts. Agent output must be **transformative**: rewrite every concept in fresh language,
+with new examples and original structure.
 
 Rules:
 
 - Do not copy wording, sequence, or narration from intake notes into any publish-facing doc.
-- Do not reference `source-material/` paths in session docs, READMEs, or curriculum files.
-- Extract only the core concept or student misconception, then explain it entirely from scratch.
-- Internal policy from source-material handling must not appear in user-visible curriculum content.
-
----
-
-## Session Bucket Safety
-
-New content adapted from `source-material/` — or from any external reference — must be placed in a
-planned or new session by default. Do not add material to a completed session without Swamy's
-explicit instruction in the current task message.
-
-When the target session is unclear, consult `docs/meetup/L1/meetup-sessions.md` and ask for
-confirmation before writing any content.
+- Do not reference `source-material/` paths in READMEs, notes, or demo files.
+- Extract only the core concept or teaching insight, then explain it entirely from scratch.
+- Internal policy must not appear in user-visible content.
 
 ---
 
 ## Precedence Order
 
-When instructions conflict, **first** follow the **Notes → precedence** chain in root **`AGENTS.md`**
-(which names `docs/RepositoryStructure.md` when present, then `.github/copilot-instructions.md`,
-then `CLAUDE.md`, then root `AGENTS.md`).
-
-For gaps not covered there, use this Claude-specific tie-break (highest wins):
+When instructions conflict, apply this chain (highest wins):
 
 1. Explicit instruction in the current user message.
 2. Root `CLAUDE.md`.
