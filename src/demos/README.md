@@ -77,14 +77,14 @@ The later demos assume familiarity with concepts introduced earlier.
 
 This repository uses:
 
-* FastMCP
-* MCP Inspector
-* Python 3.12+
-* uv
-* Streamable HTTP transport
-* stdio transport
-* Pydantic
-* asyncio
+- FastMCP
+- MCP Inspector
+- Python 3.12+
+- uv
+- Streamable HTTP transport
+- stdio transport
+- Pydantic
+- asyncio
 
 ---
 
@@ -96,19 +96,19 @@ Most demos support one or both of the following transports:
 
 Best for:
 
-* Local development
-* MCP Inspector
-* Subprocess clients
-* Learning/debugging
+- Local development
+- MCP Inspector
+- Subprocess clients
+- Learning/debugging
 
 ### Streamable HTTP transport
 
 Best for:
 
-* Remote clients
-* Browser tooling
-* Service-oriented architectures
-* Production deployment
+- Remote clients
+- Browser tooling
+- Service-oriented architectures
+- Production deployment
 
 ---
 
@@ -116,12 +116,12 @@ Best for:
 
 This repository is designed for:
 
-* AI engineers
-* Platform engineers
-* Agent framework developers
-* Tooling architects
-* Backend engineers learning MCP
-* Developers building LLM-integrated systems
+- AI engineers
+- Platform engineers
+- Agent framework developers
+- Tooling architects
+- Backend engineers learning MCP
+- Developers building LLM-integrated systems
 
 ---
 
