@@ -85,7 +85,7 @@ Sandbox promotion happens only when Swamy explicitly asks.
 
 Run before completing any code-touching task:
 
-- `ruff check src`
+- `ruff check src tests`
 - `python -m compileall -q src`
 - `npx --yes markdownlint-cli2 "README.md" "docs/**/*.md" ".github/**/*.md"`
 - `./tools/psscripts/docs-links.ps1` (Docker required)

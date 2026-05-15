@@ -163,6 +163,18 @@ Host, port, and transport are read from `config/settings.json`.
 | `multiply` | `a`, `b` (float) | Returns a × b |
 | `divide` | `a`, `b` (float) | Returns a ÷ b; errors if b = 0 |
 
+## Automated tests
+
+`tests/demos/test_01_calculator.py` checks `settings.load_config()`, the tool callables (`add`
+through `divide`, including division by zero), `calculation_help()`, and `evaluate()`. No server
+process is started — FastMCP keeps the underlying Python functions callable.
+
+From the repo root (with dev dependencies: `uv sync --all-groups`):
+
+```bash
+uv run pytest tests/demos/test_01_calculator.py -q
+```
+
 ## Resource and Prompt
 
 - **`calculation://help`** — plain-text reference guide for the tools

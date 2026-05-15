@@ -19,10 +19,9 @@ from pathlib import Path
 
 import httpx
 from mcp import ClientSession
-from pydantic import AnyUrl
 from mcp.client.stdio import StdioServerParameters, stdio_client
 from mcp.client.streamable_http import streamablehttp_client
-
+from pydantic import AnyUrl
 from settings import load_config
 
 _CONFIG = load_config()
@@ -89,7 +88,11 @@ async def demo_session(session: ClientSession) -> None:
     examples = [
         (
             "update_ticket_status",
-            {"ticket_id": "TK004", "new_status": "in_progress", "updater": "MCP Client Demo"},
+            {
+                "ticket_id": "TK004",
+                "new_status": "in_progress",
+                "updater": "MCP Client Demo",
+            },
         ),
         (
             "create_ticket",

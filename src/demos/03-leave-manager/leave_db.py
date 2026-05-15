@@ -44,8 +44,7 @@ def get_db_connection() -> sqlite3.Connection:
 def init_database() -> None:
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute(
-        """
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS employees (
             employee_id TEXT PRIMARY KEY,
             name TEXT NOT NULL,
@@ -54,10 +53,8 @@ def init_database() -> None:
             annual_leave_balance INTEGER NOT NULL,
             sick_leave_balance INTEGER NOT NULL
         )
-        """
-    )
-    cursor.execute(
-        """
+        """)
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS leave_requests (
             request_id TEXT PRIMARY KEY,
             employee_id TEXT NOT NULL,
@@ -72,8 +69,7 @@ def init_database() -> None:
             approved_by TEXT,
             FOREIGN KEY (employee_id) REFERENCES employees (employee_id)
         )
-        """
-    )
+        """)
 
     cursor.execute("SELECT COUNT(*) FROM employees")
     if cursor.fetchone()[0] == 0:
@@ -195,7 +191,9 @@ def find_similar_employees(name: str, threshold: float = 0.6) -> list[Employee]:
     employees = load_employees()
     similar: list[tuple[Employee, float]] = []
     for emp in employees:
-        similarity = difflib.SequenceMatcher(None, name.lower(), emp.name.lower()).ratio()
+        similarity = difflib.SequenceMatcher(
+            None, name.lower(), emp.name.lower()
+        ).ratio()
         if similarity >= threshold:
             similar.append((emp, similarity))
     similar.sort(key=lambda x: x[1], reverse=True)
@@ -334,7 +332,10 @@ def submit_leave_request_impl(
     if leave_type_normalized not in valid_types:
         return f"Error: Invalid leave type. Must be one of: {', '.join(valid_types)}"
 
-    if leave_type_normalized == "annual" and days_requested > employee.annual_leave_balance:
+    if (
+        leave_type_normalized == "annual"
+        and days_requested > employee.annual_leave_balance
+    ):
         return (
             f"Error: Insufficient annual leave balance for {employee.name}. "
             f"Requested {days_requested}, available {employee.annual_leave_balance}"
@@ -348,12 +349,10 @@ def submit_leave_request_impl(
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    cursor.execute(
-        """
+    cursor.execute("""
         SELECT request_id FROM leave_requests
         WHERE request_id LIKE 'REQ%' ORDER BY request_id DESC LIMIT 1
-        """
-    )
+        """)
     last_id = cursor.fetchone()
     if last_id:
         next_num = int(last_id[0][3:]) + 1
@@ -542,12 +541,10 @@ def add_employee_impl(
 
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute(
-        """
+    cursor.execute("""
         SELECT employee_id FROM employees
         WHERE employee_id LIKE 'EMP%' ORDER BY employee_id DESC LIMIT 1
-        """
-    )
+        """)
     last_id = cursor.fetchone()
     if last_id:
         next_num = int(last_id[0][3:]) + 1

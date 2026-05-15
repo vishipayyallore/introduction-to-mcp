@@ -11,7 +11,6 @@ from __future__ import annotations
 
 from mcp.server.fastmcp import FastMCP
 from mcp.types import ToolAnnotations
-
 from models import BinaryOpRequest, BinaryOpResponse
 from settings import load_config
 
@@ -32,7 +31,9 @@ mcp = FastMCP(
 @mcp.tool(
     title="Add two numbers",
     description="Returns a + b using a structured request and response model.",
-    annotations=ToolAnnotations(title="Addition", readOnlyHint=True, idempotentHint=True),
+    annotations=ToolAnnotations(
+        title="Addition", readOnlyHint=True, idempotentHint=True
+    ),
 )
 def add(request: BinaryOpRequest) -> BinaryOpResponse:
     """Add two numbers and return the result."""
@@ -91,7 +92,9 @@ def evaluate(expression: str) -> str:
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Typed calculator MCP server (FastMCP).")
+    parser = argparse.ArgumentParser(
+        description="Typed calculator MCP server (FastMCP)."
+    )
     parser.add_argument(
         "--transport",
         default=None,

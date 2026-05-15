@@ -19,9 +19,8 @@ import argparse
 import asyncio
 from functools import partial
 
-from mcp.server.fastmcp import FastMCP
-
 import leave_db
+from mcp.server.fastmcp import FastMCP
 from settings import load_config
 
 _CONFIG = load_config()

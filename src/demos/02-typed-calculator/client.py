@@ -21,7 +21,6 @@ import httpx
 from mcp import ClientSession
 from mcp.client.stdio import StdioServerParameters, stdio_client
 from mcp.client.streamable_http import streamablehttp_client
-
 from settings import load_config
 
 _CONFIG = load_config()
