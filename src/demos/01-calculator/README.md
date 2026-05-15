@@ -25,6 +25,22 @@ for building MCP servers with decorators.
     └── settings.json  # host, port, transport, server name
 ```
 
+## Topology (dual transport)
+
+The same FastMCP tool logic runs over **stdio** or **Streamable HTTP** — only the wire changes.
+
+```mermaid
+flowchart TB
+    C["Client\n(client.py)"]
+    S["FastMCP server\n(server.py)"]
+    C -->|"stdio (subprocess)"| S
+    C -->|"Streamable HTTP\n127.0.0.1:8000/mcp"| S
+    classDef softClient fill:#e8f0fe,stroke:#9db4d9,stroke-width:1px,color:#1e3a5f
+    classDef softServer fill:#edf6ee,stroke:#9bc4a4,stroke-width:1px,color:#1f3d28
+    class C softClient
+    class S softServer
+```
+
 ## Setup
 
 Dependencies are managed at the repo root via `pyproject.toml`
