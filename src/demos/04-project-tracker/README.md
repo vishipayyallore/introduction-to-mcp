@@ -27,6 +27,25 @@ Tools mutate the database; **resources** are cheap read views that always reflec
 └── config/settings.json   # port 8003
 ```
 
+## Tools vs resources (state)
+
+**Tools** change rows; **resources** re-read the database so URIs always reflect the latest state.
+
+```mermaid
+flowchart LR
+    T["MCP tools\n(create / update)"]
+    DB[("SQLite\nproject_tracker.db")]
+    R["MCP resources\n(URI templates)"]
+    T -->|INSERT / UPDATE| DB
+    DB -->|SELECT snapshots| R
+    classDef softTools fill:#e8f0fe,stroke:#9db4d9,stroke-width:1px,color:#1e3a5f
+    classDef softDb fill:#fdf3f0,stroke:#e0b8b0,stroke-width:1px,color:#5c3228
+    classDef softRes fill:#f4f0fb,stroke:#c9b8e8,stroke-width:1px,color:#3a2854
+    class T softTools
+    class DB softDb
+    class R softRes
+```
+
 ## Setup
 
 ```bash
