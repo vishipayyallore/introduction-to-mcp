@@ -1,4 +1,4 @@
-"""Project Tracker MCP server - SQLite tickets/projects with templated resources (Demo 04).
+"""Project Tracker MCP server for SQLite tickets/projects (Demo 04).
 
 HTTP mode (http://127.0.0.1:8003/mcp):
 
@@ -8,8 +8,9 @@ Stdio:
 
     uv run python src/demos/04-project-tracker/server.py --transport stdio
 
-Resources use URI templates (for example ``ticket://TK001``, ``tickets://for-project/PROJ001``)
-so clients resolve **stable paths over evolving database state** - the focus of Demo 04.
+Resources use URI templates (for example ``ticket://TK001`` and
+``tickets://for-project/PROJ001``) so clients resolve stable paths over
+evolving database state - the focus of Demo 04.
 """
 
 from __future__ import annotations
@@ -45,7 +46,7 @@ def resource_ticket_detail(ticket_id: str) -> str:
 
 @mcp.resource("tickets://for-project/{project_id}")
 def resource_tickets_for_project(project_id: str) -> str:
-    """Tickets belonging to a project; ``project_id`` is ``PROJ001``-style (stable in URIs)."""
+    """Tickets for a project; ``project_id`` uses a ``PROJ001``-style URI id."""
     return tracker_db.format_tickets_for_project_id(project_id)
 
 
@@ -84,7 +85,7 @@ def create_ticket(
     due_date: str = "",
     tags: str = "",
 ) -> str:
-    """Create a ticket (mutates SQLite state; resources reflect changes on next read)."""
+    """Create a ticket and expose the change on the next resource read."""
     return tracker_db.create_ticket_impl(
         title,
         description,
