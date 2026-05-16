@@ -1,0 +1,42 @@
+name: Docs quality
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/docs-quality.yml"
+      - ".github/**/*.md"
+      - "README.md"
+      - "docs/**/*.md"
+      - "tools/psscripts/docs-links.ps1"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/docs-quality.yml"
+      - ".github/**/*.md"
+      - "README.md"
+      - "docs/**/*.md"
+      - "tools/psscripts/docs-links.ps1"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Markdownlint
+        run: npx --yes markdownlint-cli2 "README.md" "docs/**/*.md" ".github/**/*.md"
+
+      - name: Docs links
+        shell: pwsh
+        run: ./tools/psscripts/docs-links.ps1
