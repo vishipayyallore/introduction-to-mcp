@@ -67,7 +67,8 @@ def divide(request: BinaryOpRequest) -> BinaryOpResponse:
 def calculation_help() -> str:
     """Reference guide for the typed calculator tools."""
     return (
-        "Tools accept a single argument object `request` with fields `a` and `b` (floats).\n"
+        "Tools accept a single argument object `request` "
+        "with fields `a` and `b` (floats).\n"
         "Each tool returns a structured object with `result` (float).\n"
         "divide raises an error when b is 0.\n"
         "Open the MCP Inspector to inspect generated JSON Schemas."
@@ -82,7 +83,8 @@ def evaluate(expression: str) -> str:
     """Prompt the model to evaluate an expression using the calculator tools."""
     return (
         f"Evaluate the following expression using only the available calculator tools "
-        f"(add, subtract, multiply, divide). Each tool takes request {{a, b}}: {expression}"
+        f"(add, subtract, multiply, divide). "
+        f"Each tool takes request {{a, b}}: {expression}"
     )
 
 

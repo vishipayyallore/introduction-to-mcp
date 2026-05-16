@@ -68,7 +68,7 @@ def calculation_help() -> str:
 
 @mcp.prompt()
 def evaluate(expression: str) -> str:
-    """Prompt the model to evaluate a mathematical expression using the calculator tools."""
+    """Prompt the model to evaluate an expression with calculator tools."""
     return (
         f"Evaluate the following expression using only the available calculator tools "
         f"(add, subtract, multiply, divide): {expression}"

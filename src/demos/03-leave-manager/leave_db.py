@@ -531,7 +531,10 @@ def add_employee_impl(
         if similar_employees:
             result = f"Found employees with similar names to '{name}':\n"
             for emp in similar_employees[:3]:
-                result += f"ID: {emp.employee_id} | Name: {emp.name} | Dept: {emp.department}\n"
+                result += (
+                    f"ID: {emp.employee_id} | Name: {emp.name} | "
+                    f"Dept: {emp.department}\n"
+                )
             result += "\nDo you want to:\n"
             result += "#1. Use an existing employee above, or\n"
             result += "#2. Create new employee anyway by calling add_employee with "

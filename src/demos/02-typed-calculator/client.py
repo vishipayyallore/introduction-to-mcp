@@ -65,7 +65,8 @@ async def demo_session(session: ClientSession) -> None:
         print(f"  {prompt.name}: {prompt.description}")
     print()
 
-    # Tools take one parameter `request` matching BinaryOpRequest (see server / Inspector schema).
+    # Tools take one parameter `request` matching BinaryOpRequest
+    # (see server / Inspector schema).
     examples = [
         ("add", {"request": {"a": 10.0, "b": 3.0}}),
         ("subtract", {"request": {"a": 10.0, "b": 3.0}}),
