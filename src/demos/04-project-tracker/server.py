@@ -16,9 +16,8 @@ from __future__ import annotations
 
 import argparse
 
-from mcp.server.fastmcp import FastMCP
-
 import tracker_db
+from mcp.server.fastmcp import FastMCP
 from settings import load_config
 
 _CONFIG = load_config()
@@ -99,14 +98,18 @@ def create_ticket(
 
 
 @mcp.tool()
-def update_ticket_status(ticket_id: str, new_status: str, updater: str = "System") -> str:
+def update_ticket_status(
+    ticket_id: str, new_status: str, updater: str = "System"
+) -> str:
     """Update ticket workflow status."""
     return tracker_db.update_ticket_status_impl(ticket_id, new_status, updater)
 
 
 if __name__ == "__main__":
     tracker_db.init_database()
-    parser = argparse.ArgumentParser(description="Project Tracker MCP server (FastMCP).")
+    parser = argparse.ArgumentParser(
+        description="Project Tracker MCP server (FastMCP)."
+    )
     parser.add_argument(
         "--transport",
         default=None,

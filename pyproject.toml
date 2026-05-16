@@ -14,3 +14,16 @@ dependencies = [
 Homepage = "https://modelcontextprotocol.io"
 Documentation = "https://modelcontextprotocol.github.io/python-sdk/"
 Uv = "https://docs.astral.sh/uv/"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.isort]
+profile = "black"
+line_length = 88

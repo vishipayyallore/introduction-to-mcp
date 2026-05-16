@@ -62,7 +62,7 @@ the same **source-material** rules documented here and in root **`AGENTS.md`**.
 
 Before marking any task complete:
 
-- `ruff check src`
+- `ruff check src tests`
 - `python -m compileall -q src`
 - `npx --yes markdownlint-cli2 "README.md" "docs/**/*.md" ".github/**/*.md"`
 - `./tools/psscripts/docs-links.ps1` (Docker required)

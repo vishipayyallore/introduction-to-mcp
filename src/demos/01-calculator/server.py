@@ -8,7 +8,6 @@ Stdio mode (for subprocess clients or the MCP Inspector):
 """
 
 from mcp.server.fastmcp import FastMCP
-
 from settings import load_config
 
 _CONFIG = load_config()
@@ -23,6 +22,7 @@ mcp = FastMCP(
 
 
 # --- Tools -------------------------------------------------------------------
+
 
 @mcp.tool()
 def add(a: float, b: float) -> float:
@@ -52,6 +52,7 @@ def divide(a: float, b: float) -> float:
 
 # --- Resources ---------------------------------------------------------------
 
+
 @mcp.resource("calculation://help")
 def calculation_help() -> str:
     """Reference guide for the available calculator tools."""
@@ -63,6 +64,7 @@ def calculation_help() -> str:
 
 
 # --- Prompts -----------------------------------------------------------------
+
 
 @mcp.prompt()
 def evaluate(expression: str) -> str:

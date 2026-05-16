@@ -75,7 +75,8 @@ intake rules above apply to **every** Copilot-assisted edit in this repository.
 
 Before completing any task:
 
-- `ruff check src`
+- `ruff check src tests`
 - `python -m compileall -q src`
+- `uv run pytest tests -q` (after `uv sync --all-groups`)
 - `npx --yes markdownlint-cli2 "README.md" "docs/**/*.md" ".github/**/*.md"`
 - `./tools/psscripts/docs-links.ps1` (Docker required)

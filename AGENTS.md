@@ -18,10 +18,11 @@ Repository agent guidance for automation and code assistants.
 
 ## Required Checks Before Completion
 
-1. `ruff check src`
+1. `ruff check src tests`
 2. `python -m compileall -q src`
-3. `npx --yes markdownlint-cli2 "README.md" "docs/**/*.md" ".github/**/*.md"`
-4. `./tools/psscripts/docs-links.ps1` (Docker required)
+3. `uv run pytest tests -q` (after `uv sync --all-groups` or equivalent so `pytest` is available)
+4. `npx --yes markdownlint-cli2 "README.md" "docs/**/*.md" ".github/**/*.md"`
+5. `./tools/psscripts/docs-links.ps1` (Docker required)
 
 ## Source Intake Policy
 

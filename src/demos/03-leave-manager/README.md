@@ -34,6 +34,30 @@ blocking SQLite — so the asyncio event loop stays usable while work hits the d
 The database file **`leave_manager.db`** is created next to these modules on first run (see
 `.gitignore`).
 
+## Async tools and SQLite
+
+**Async** MCP tools keep the event loop free; blocking work runs in **`asyncio.to_thread`** against
+`leave_db.py` (same dual transport as earlier demos).
+
+```mermaid
+flowchart TB
+    C["Client\n(client.py)"]
+    S["Async tools\n(server.py · port 8002)"]
+    W["Worker thread\n(asyncio.to_thread)"]
+    D[("SQLite\nleave_manager.db")]
+    C -->|"stdio or HTTP"| S
+    S -->|await| W
+    W --> D
+    classDef softClient fill:#e8f0fe,stroke:#9db4d9,stroke-width:1px,color:#1e3a5f
+    classDef softServer fill:#edf6ee,stroke:#9bc4a4,stroke-width:1px,color:#1f3d28
+    classDef softWorker fill:#fef8e8,stroke:#e6d39a,stroke-width:1px,color:#5c4a1f
+    classDef softDb fill:#fdf3f0,stroke:#e0b8b0,stroke-width:1px,color:#5c3228
+    class C softClient
+    class S softServer
+    class W softWorker
+    class D softDb
+```
+
 ## Setup
 
 From the repo root:

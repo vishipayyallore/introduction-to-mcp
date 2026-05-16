@@ -34,10 +34,22 @@ jobs:
         run: uv sync --all-groups --link-mode=copy
 
       - name: Ruff
-        run: uvx ruff check src
+        run: uvx ruff check src tests
+
+      - name: Black
+        run: uvx black --check src
+
+      - name: isort
+        run: uvx isort --check-only src
+
+      - name: Flake8
+        run: uvx flake8 src
 
       - name: Compileall
         run: uv run python -m compileall -q src
+
+      - name: Pytest
+        run: uv run pytest tests -q
 
       - name: Markdownlint
         run: npx --yes markdownlint-cli2 "README.md" "docs/**/*.md" ".github/**/*.md"

@@ -37,6 +37,26 @@ by refactoring Demo 01 — keeping **01** small and **02** focused on schemas.
     └── settings.json  # host 127.0.0.1, port 8001 — avoids clashing with Demo 01
 ```
 
+## Topology and typed layer
+
+Dual transport matches Demo **01**; this demo adds **Pydantic**-backed tool contracts (schemas +
+validation) in `models.py`.
+
+```mermaid
+flowchart TB
+    C["Client\n(client.py)"]
+    S["FastMCP server\n(server.py · port 8001)"]
+    M["Pydantic layer\n(models.py)"]
+    C -->|"stdio or Streamable HTTP"| S
+    S --> M
+    classDef softClient fill:#e8f0fe,stroke:#9db4d9,stroke-width:1px,color:#1e3a5f
+    classDef softServer fill:#edf6ee,stroke:#9bc4a4,stroke-width:1px,color:#1f3d28
+    classDef softModel fill:#f4f0fb,stroke:#c9b8e8,stroke-width:1px,color:#3a2854
+    class C softClient
+    class S softServer
+    class M softModel
+```
+
 ## Setup
 
 From the repo root:

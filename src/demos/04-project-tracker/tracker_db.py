@@ -52,8 +52,7 @@ def init_database() -> None:
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    cursor.execute(
-        """
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS projects (
             project_id TEXT PRIMARY KEY,
             name TEXT NOT NULL,
@@ -61,11 +60,9 @@ def init_database() -> None:
             status TEXT NOT NULL,
             created_date TEXT NOT NULL
         )
-        """
-    )
+        """)
 
-    cursor.execute(
-        """
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS tickets (
             ticket_id TEXT PRIMARY KEY,
             title TEXT NOT NULL,
@@ -80,16 +77,39 @@ def init_database() -> None:
             project TEXT NOT NULL,
             tag TEXT
         )
-        """
-    )
+        """)
 
     cursor.execute("SELECT COUNT(*) FROM projects")
     if cursor.fetchone()[0] == 0:
         sample_projects = [
-            ("PROJ001", "Website Redesign", "Complete redesign of company website", "active", "2024-01-15"),
-            ("PROJ002", "Mobile App", "Develop mobile application for iOS and Android", "active", "2024-02-01"),
-            ("PROJ003", "API Integration", "Integrate third-party APIs for data synchronization", "completed", "2024-01-10"),
-            ("PROJ004", "Security Audit", "Comprehensive security audit and improvements", "on_hold", "2024-03-01"),
+            (
+                "PROJ001",
+                "Website Redesign",
+                "Complete redesign of company website",
+                "active",
+                "2024-01-15",
+            ),
+            (
+                "PROJ002",
+                "Mobile App",
+                "Develop mobile application for iOS and Android",
+                "active",
+                "2024-02-01",
+            ),
+            (
+                "PROJ003",
+                "API Integration",
+                "Integrate third-party APIs for data synchronization",
+                "completed",
+                "2024-01-10",
+            ),
+            (
+                "PROJ004",
+                "Security Audit",
+                "Comprehensive security audit and improvements",
+                "on_hold",
+                "2024-03-01",
+            ),
         ]
         cursor.executemany(
             """
@@ -488,7 +508,9 @@ def create_ticket_impl(
     return f"Successfully created ticket {ticket_id}: {title}"
 
 
-def update_ticket_status_impl(ticket_id: str, new_status: str, updater: str = "System") -> str:
+def update_ticket_status_impl(
+    ticket_id: str, new_status: str, updater: str = "System"
+) -> str:
     valid_statuses = ["pending", "in_progress", "completed", "closed"]
     if new_status.lower() not in valid_statuses:
         return f"Error: Status must be one of: {', '.join(valid_statuses)}"
