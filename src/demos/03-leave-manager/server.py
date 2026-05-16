@@ -157,9 +157,7 @@ async def add_employee(
 
 if __name__ == "__main__":
     leave_db.init_database()
-    parser = argparse.ArgumentParser(
-        description="Leave Manager MCP server (FastMCP)."
-    )
+    parser = argparse.ArgumentParser(description="Leave Manager MCP server (FastMCP).")
     parser.add_argument(
         "--transport",
         default=None,
