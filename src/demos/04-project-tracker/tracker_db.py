@@ -341,7 +341,8 @@ def format_tickets_by_status(status: str) -> str:
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
-        "SELECT * FROM tickets WHERE LOWER(status) = LOWER(?) ORDER BY created_date DESC",
+        "SELECT * FROM tickets WHERE LOWER(status) = LOWER(?) "
+        "ORDER BY created_date DESC",
         (status,),
     )
     rows = cursor.fetchall()
@@ -368,7 +369,8 @@ def format_tickets_by_assignee(assignee: str) -> str:
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
-        "SELECT * FROM tickets WHERE LOWER(assignee) = LOWER(?) ORDER BY created_date DESC",
+        "SELECT * FROM tickets WHERE LOWER(assignee) = LOWER(?) "
+        "ORDER BY created_date DESC",
         (assignee,),
     )
     rows = cursor.fetchall()
@@ -467,7 +469,8 @@ def create_ticket_impl(
     cursor = conn.cursor()
 
     cursor.execute(
-        "SELECT ticket_id FROM tickets WHERE ticket_id LIKE 'TK%' ORDER BY ticket_id DESC LIMIT 1"
+        "SELECT ticket_id FROM tickets WHERE ticket_id LIKE 'TK%' "
+        "ORDER BY ticket_id DESC LIMIT 1"
     )
     last_id = cursor.fetchone()
     if last_id:
